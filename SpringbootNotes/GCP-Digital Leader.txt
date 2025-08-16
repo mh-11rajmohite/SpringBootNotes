@@ -1,0 +1,46 @@
+#9. Define an organization policy at the root organizatoin node to restrict virtual machine
+#10. Migrate the workload to a public cloud
+#11. Order a Partner Interconnect connection withe your network provider
+#12. Store the image in Cloud Registry
+#13. You wanr ro minimize the level of management by the customer
+#14. Convert your app into container
+#15. Configure single sing-on in google domain
+#16. Host all your subsidiaries services together with existing on public cloud
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

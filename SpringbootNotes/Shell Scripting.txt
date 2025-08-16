@@ -1,0 +1,2004 @@
+OS - Software which communicate with the hardware 
+
+Functions : 
+- Memory Managenemt
+- Process Management
+- Device Management 
+- File Management
+- Secuirty
+- System Performance
+- Error Detecting
+- Interacting between application and users
+
+Famous OS :
+- Online System (NLS) : 1962
+- UNIX : 1971
+- Ms-DOS : 1982
+- Macintosh : 1984
+- Windows : 1985
+- Linus : 1991
+- Palm OS : 1996
+- Windows Ce:1996
+- EPOC32 :1997
+- Blackberry : 2002
+-iOS :2007
+-Android - 2008
+
+Process Management : 
+-In multiProgramming environment , the OS decides which process get the processor 
+when and for how much time. This function is called process scheduling .
+-OS does following activites : 
+	-Keeps tracks of processor and status of process. the program is reponsible for this task is known as traffic controller.
+	-Allocates the processor to a process.
+	-Deallocates process when a process is no longer required.
+
+
+Process :- It is an active entity
+	-Process memory is divided into four sections for efficient working:
+	-Text Section : It is made up of the compiled program code,read in from non-volatile storage when the program is launched.
+	-BSS/Data section: It consist global variable and static variables , allocated and initialized prior to executing the main.
+	-Heap : It is used for the dynamic memory allocation and is managed via calss ,like new, delete, malloc, free,etc.
+	-Stack is used for local variables . Space on the stack is reserved for local variables when they are declared
+
+
+Process Life cycle:
+-New 
+-Ready
+-Running
+-Wait
+-Terminated
+
+
+
+Memory Management:
+-It keeps track of the status of each memory location, either allocated or free.
+-It manages primary memory and moves processes back and forth bet main mamoery and disk during execution
+-It checks how much memory is to be allocated to process
+-It tracks whenever some memory gets freed or unallocated and correspondingly it updates the status.
+
+
+
+History of UNIX : 
+- MultICS : 
+- UnICS : By Dennis Ritchie,developed with Assembly Language, Non-Portable
+- UNIX : with C,Portable
+
+
+Architecture Of UNIX:
+-Kernel : Core of UNIX OS,all kind of managements,interact with hardware
+-Shell : Middleware between Kernal and Application Program
+-Application Program
+
+
+
+
+Commands in Linux :
+
+1. mkdir HCLTech : create a folder
+2. cd HCLTech : change directory
+3. pwd : Path to directory
+4. ls : list floders and files
+5. mkdir {weather,test,lab}report : create weatherreport,testreport,labreport folder at once
+6. mkdir User{1..10} : create dir from User1..User10
+7. mkdir "My Doc" : create My Doc directory
+8. mkdir My\ Dir : create My Dir directory
+9. cat > info.txt hi, how r you?
+I am fine, how r you?		: create file info.text and redirectes inputs to file
+10. Ctrl+d : get out to current directory
+11. tac info.txt : display data on terminal
+12. cat > info.txt writing random content to file : it will overwrite the current existing file 
+13. set -o noclabber : cannot overwrite the the file
+
+14. cat >> info.txt : add content to existing file
+15. cat info.txt 1> newinfo.txt : redirects data to new file from output of previous filr
+16. cat abc.txt :
+17. cat abc.txt 2> errormsg.txt : redirect error msg to file from previous command 
+18. cat errormsg.txt : 
+19. cat xyz.txt 2 >> errormsg.txt
+20. cat errormsg.txt
+
+21. cat info.txt - errormsg.txt - newinfo.txt : print ouput of multiple files on Ctrl+D
+22. touch emptyfile emptyfile : create empty file
+23. pwd ; ls : path with file and folders
+24. cat myinfo ; pwd ; ls : commands will even if their is a error
+25. pwd && ls : both the commands will work
+26. cat myfile && ls : if first command fails second command wil not work
+27. ls *report : print file name and data of all files ends with report
+28. ls *.txt :gives all text files
+29. ls User? : file name with name User(and one caracter with file name)
+29. mkdir User : 
+30. ls User* : all file with name having "User" in it.
+31. ls User[1-5] : range of files
+32. ls User[6,9]
+33. ls User[26] : file name with User2 and User6
+34. ls -d User1 : gives folder with name User1
+35. ls -d User10 :  gives folder with name User10
+36. ls -d User[10] : gives folder with name User1 and User0
+
+37. cd .. : takes to parent directory
+38. cd ~ : takes to home directory
+39. cd / : takes to root directory
+40. ls -l : list all files with details
+
+
+#Column 1 :  permission
+d for directory
+- for file
+3 custodians for file or folder : User, Group, Others
+each file will have 3 pernission : Read(r),Write(w),Execute(x)
+
+#Column 2 :link
+#Column 3 :username
+#Column 4 :groupname
+#Column 5 :size
+#Column 6 :create time/date and last modified time
+#Column 7 :filename/dirname
+
+
+
+41. ls -a : gives user and system hidden files 
+42. ls -A : gives user create hidden files 
+
+43. cat > .hiddenfile1 : create hidden file
+
+44.touch weatherreport/abc.txt : 
+45. ls *report : give folder name and files within it
+46. ls -d *report : give foldres
+47. ls -lh :
+48. ls -tl:  last modified time 
+49.ls -Sl : gives files and folders based on size
+50. ls -F : 
+
+
+
+51. ls -R
+
+52. cp info.txt copyinfo.txt : copy data to other file
+53.cp info.txt waetherreport/newinfo.txt : copy to other folder 
+54.cp info.txt waetherreport/ : copy same file to other folder
+55. cp info.txt /home/sam/Desktop/desinfo.txt : copy to desktop
+55. cp info.txt ../desinfo.txt : copy to parent directory
+
+56. cp {emptyfile1,emptyfile2} ./"My Dir" : copy multiple files to dir
+57. cp -r labreport User : copy folder to dir
+58. cp *.txt User1 : copy all .txt files tp dir
+
+59. mv info User3 : move file to User3
+
+60. rm newinfo : remove file
+61. rm *.txt : remove file with .txt extinction
+62. rmdir User10 : remove empty dir
+63. rm -R User :  remove unempty dir
+
+64. man  rm : information of all commands
+
+65. wc -c info.txt : no. of char
+66. wc -l info.txt : no. of lines
+67. wc -w info.txt : no. of words
+
+68. date  : gives day date time 
+69. date +%D : dd/mm/yy format date
+70. date +%F : yyy-mm-dd format date
+
+71. date +%a : Wed
+72. date +%A : Wednesday
+73. date +%d : month (09)
+74. date +%e : month(9)
+75. date +%y : year (22)
+76. date +%Y :year (2022)
+77. date +%m : date(03)
+78. date +%b : Mar
+79. date +%B : March
+
+80. date +%d"-"%b"-%Y : date 
+81. date +%X : time 
+82. date +%H : hours
+83. date +%M : min
+84. date +%S : sec
+85. date +%s : micro sec
+86. date +%p : AM/PM
+87. date +%Z : time zone
+88. date +%H:%M:%S : time
+89. date +%H:%M:%S" "%Z : time with time zone
+
+90. cal: current month calender
+91. cal 2021 : year calender
+92. cal 12 2021 : particular month calender
+93. cal -3 : previous , current, next month calender
+93. cal -A 2 : current month and next 2 month
+94. cal -B 3 : current month and previous 3 month
+95. cal -j : countine numbering of days of years
+96. cal -j 2022:
+97.  cal -w 2022 : gives week number below calender
+
+
+98. list=$(ls) : create list of ls
+99. echo list : print list
+
+100. path=$(pwd)
+101. echo path
+
+102. read cmdvar 
+pwd 
+
+103. echo $cmdvar
+104. eval $cmdvar
+105.$($cmdvar)
+106. ($cmdvar)
+
+107. path=$(pwd) echo $path
+108. pathcmd=pwd $pathcmd
+
+
+109. cat > names Samuel Edison Blesson Sugan Jordan
+110. sort names : sort data
+111. sort -r names : sort reverse order
+112. cat >nums 12345 765 9 567 4567 321 1276595 : sorts data on first digit
+113. sort -n nums : sort data in order
+114. sort -n -r nums/sort -nr nums : sort data in reverse order
+115. sort -f names : sort with different cases
+116. cat > months Jan Mar Feb Dec Jun Jul Oct 
+117. sort months : sort with alphabets
+118. sort -M months : sort according months
+119. cat > names1 
+
+120. sort names > sortednames 
+121. cat sortednames
+
+122. sort -o names names : sort and store into names 
+122. sort -o names -r names 
+
+
+123. cat > emp
+123#Samuel#Chennai#97984
+125#Edison#Delhi#87562
+124#Sugan#Chennai#7475487
+126#Jordan#Mumbai#97398748
+127#Blesson#Pune#6742652
+
+124. sort emp > sort using first columns
+125. sort -t'#' -k2 emp : sort t-delimiter , k-column
+126. sort -n -t'#' -k2 emp
+
+127. cut -c2 names : cut column3 names
+128. cut -c1,3,5 names : cut column3,5 names
+
+129. cut -c1-5 names: cut 1 to 5 characters
+130. cut -c5- names:cut 5th till last character 
+131. cut -d'#' -f2 emp
+132. cut -d'#' -f2,4 emp
+133. cut -s -d'#' -f2,4 emp
+
+
+134. cat > Devs1 Bjarne Dennis Ken Ritchie Thompson
+     cat > Devs2 Ken Ritchie Satya Stroustrup Sundar
+	comm Devs1 Devs2 : compare two files 
+
+135. comm -1 Devs1 Devs2 : supress first column 
+136. comm -2 Devs1 Devs2 : supress second column 
+
+137. cat Devs2 >> Devs1
+
+138. uniq Devs1 : discard repeated data which is adjacent
+139. uniq -c Devs1 : count of the words
+
+140. uniq -d Devs1 : gives adjaent and repeating values
+141. uniq -u Devs1 : gives nonreprating values
+
+
+142. cat > myinfo
+this is my blue container
+this is my green pen
+
+143. cat myinfo | tr 'b' 'g'
+144. cat myinfo | tr 'bt' 'gT'
+145. cat myinfo | tr -d 'e' : remove all e's  
+146. tr 'b' 'g' < myinfo
+
+147. tr "[:lower:]" "[:upper:]" : change lower case to upper case
+148. tr -d "[:space:]" < myinfo : delete all spaces
+149. tr -d "[:blank:]" < myinfo :
+
+150. cut -d'#' -f2 emp > empname
+151. cut -d'#' -f1 emp |tee empid
+
+152. cat Linux | more
+153. head Linux
+154. head -5 Linux
+155. tail Linux
+156. tail -7 Linux
+
+157. head -c5 Linux
+
+158. ln myinfo myinfo_lnk : link two files(aslo called hard link)
+	cat myinfo cat myinfo_link
+
+	cat >> myinfo_lnk this is new line added to myinfo_lnk
+	cat myinfo_lnk cat myinfo
+
+159. ln myinfo ../HCL/myinfo_ln 
+cat ../HCL/myinfo_ln
+cat >> ../HCL/myinfo_ln
+this is new line added from different folder
+cat myinfo_ln
+cat myinfo
+cat myinfo_lnk
+
+
+160. cat -s nums nums_lnk : linking two files(soft link), can only be linked in same directory 
+	cat -l nums*
+	cat >> nums_lnk this is a new line added in nums_lnk
+	cat nums
+	cat nums_lnk
+	
+
+161. ln nums abc : link already existing file
+	gives error
+	 
+     ln -i nums abc: first it will ask permission and then it will replace the file
+     ln -f nums abc : forcefully replace the file 
+
+
+162. cat > mydata
+this is my blue pen
+this is my glue box
+this is my bluetooth
+
+grep 'blue' mydata
+grep -w 'blue' mydata
+grep 'blue|glue' mydata
+cat >> mydata this is testing blue|glue
+
+grep 'blue\|glue' mydata
+grep '(b\|g\)lue' mydata
+
+
+163. cat >> mydata
+this is my blue pen
+this is my glue box
+this is my bluetooth
+this is for testing bule|glue
+This is my book
+I want to read this book soon
+
+grep 'this' mydata
+grep -i 'this' mydata
+
+grep 'pen' mydata : gives line with word 'pen'
+grep 'pen$' mydata : gives line ending with word 'pen'
+grep -c 'this' mydata : gives count of word 'this'
+grep -ic 'this' mydata : gives count of word 'this' ignores the case
+
+grep 'blue' mydata 
+grep -w 'blue' mydata : give lines with word 'blue'
+grep -v 'blue' mydata  : exclude word as well as substring 'blue'
+grep -wv 'blue' mydata : exclude substring 'blue'
+
+
+grep -r 'h' : search in all directories for word 'hi'
+
+grep '\(b\|g\)lue' mydata : 
+egrep '(b|g)lue' mydata : extended grep 
+grep -E '(b|g)lue' mydata : extended grep
+
+fgrep 'blue|glue' mydata :fixed grep
+
+
+archive 
+164. tar -cf ../Backup/wrbackup.tar weatherreport : create archive file
+ls -l ../Backup/
+
+165. tar -tf wrbackup.tar : show contents in archive files
+166. tar -xf wrbackup.tar : extract archive file or folder
+
+167. tar -cf ../Backup/myfiles.tar abc abc.txt Ceos cpnames myinfo
+
+168. find . -name '*.txt' : find names of file in current dir and subdirectory
+ 169. find . -name 'abc*' : find files with same case  
+170. find . -iname 'abc*' : find files wiith both the cases
+
+171. find . -type d : type dir 
+172. find . -type f : type file
+
+173. find . -perm 664 : file with permission
+
+174. find . -name '*.txt' -exec cp {} ../Backup \; : copy filw to backup folder
+
+
+Custodians  :  user/owner(u)	group(g)	others(o)	all(a)
+Permissions :	read(r/4)	write(w/2)	execute(x/1)
+
+175. ls -l info.txt :gives details of file
+
+176. chmod o+w info.xt :change permission of owner to write
+177. chmod u-w info.xt :remove write permission of owner
+178. chmod g-w info.xt :remove write permission of group
+179. chmod a+w info.xt :change permission of all custodians to write
+
+180. chmod 666 info.txt : give read and write permission to all custodians
+181. chmod 664 info.txt : give read and write permission to owner and group and read permission to other
+
+182. chmod 004 info.txt : give read permission to other only
+
+
+
+Shell Scritping
+183. vi demo.sh
+	pwd
+	date
+
+     execute : sh demo.sh
+
+
+184. file name : vi arthematic.sh
+
+#!/bin/bash
+echo "Enter A and B"
+#sum='expr $a + $b'
+#sum=$(a+b)
+#((sum=a+b))
+echo "Sum of $a and $b is $sum"
+
+execute - bash arthematic.sh
+
+
+
+185. file name : vi product.sh
+
+#!/bin/bash
+echo "Enter A and B"
+#prod='expr $a \* $b'
+#prod=$(a*b)
+#((prod=a*b))
+echo "Product of $a and $b is $prod"
+
+execute - bash product.sh
+
+
+186. Addition of float values
+file name : vi floatarth.sh
+
+#!/bin/bash
+echo "Enter A and B"
+#sum='echo $a + $b |bc'
+echo "Sum of $a and $b is $sum"
+
+execute - bash floatarth.sh
+
+
+187. Printing a message
+
+#!bin/bash
+
+clear
+echo "Hello World!"
+
+
+188. taking input and printing output
+
+#!bin/bash
+
+clear
+echo 
+
+read -n 6 -p "Enter Project Code : " project_code         # here read 6 char code in project_code variable
+
+echo
+echo "Retrieving data for Project " $project_code         
+echo
+
+
+189. env : list of environment variables
+190. echo $home 
+	echo $HOME
+
+191. echo "Current User: " $USER
+
+192. env | grep -i home
+
+
+193. declare -i intvar 
+intvar = 3345
+echo $intvar
+
+intvar = 1.5
+error
+
+194. declare -r rovar="Halifax"
+echo $rovar
+
+rovar="Toronto"
+error
+
+costcenter="Chicago"
+echo $costcenter
+
+unset costcenter: unset varible
+echo costcenter
+
+195. echo ${fakevar-"this is all text"}
+
+fakevar = "Delhi"
+echo $fakevar
+
+196.echo $rovar
+echo ${rovar#*i} : 
+
+
+197. Passing argument to shell script
+
+#!/bin/bash
+
+if test "$1" = ""
+	them 
+		echo "You must supply a username"
+		exit
+if
+
+if test "$2" = ""
+	then 
+		echo "You must supply a file system searching point"
+		exit
+fi
+
+clear
+echo
+echo "Please wait , seeking files owned by" $1
+echo
+find $2 -user $1
+
+
+
+
+198. input output redirection operators
+cities.txt
+
+sort < cities.txt : directing cities.txt file to sort 
+		    gives sortes cities names
+
+199. grep -i "t" < cities.txt : directing cities.txt file to sort, gives cities having 'T' or 't' char in them
+
+
+200. find /datafiles/ -size +8000c: give file with size 8000 and plus
+
+201. find /datafiles/ -size +8000c > /largefiles.txt : redirecting output to another file using '>' operator
+cat /largefiles.txt 
+
+202. sort < cities.txt > sorted_cities.txt : redirecting sorted cities names to other file
+
+203. su - user1 : switch user to user1
+
+204. find  / user user1 2>/dev/null : redirect error to other file
+
+205. find -home -user user1
+
+206. find -home -user user1 | tee user1files.txt
+
+
+
+
+Controlling and managing Running Scripts : 
+
+
+207. find / : find all folders and files 
+to pause : Ctrl+s
+to run again : Ctrl+q
+to stop : Ctrl+s
+
+208. job : gives running and recently terminated processes and jobs
+[1] : represent serial no. of job
++/- : + most recelty job send to background
+76472 : job id or code
+Running/Stopped : tells that job is running or stoped
+find / : gives name of the job running 
+
+209. bg 1 : resume background job 
+
+
+210. cat /dev/random > /dev/null : command will run 
+211. cat /dev/random > /dev/null& : command will run in background by adding '&' 
+
+212. cat backup.sh >
+tar -czf backup.gz /bin -R > /backup/log.txt 2>&1 : 
+
+213. fg : gives foreground running job
+213. bg : gives background running job
+
+215. ./backup.sh & : to put job to background
+
+216. kill %1 : terminates the process with serail no. one
+217. kill [job_id] : terminates the process with job id
+
+218. disown -h %1 : job will run on other shell even if we delete current shell
+
+
+
+
+Passing and Using Arguments in Shell Scripts
+
+219. echo $? : shows weather the last job is executed successfully 
+0  means success
+2 means error
+
+220. machine_status.sh
+#!/bin/bash
+
+clear
+echo "Computer name : " $HOSTNAME
+echo "Currently logged in user : " $USER
+echo "Name of this Script : " $0
+echo "Number of parameters passed to this script : " $#
+echo ""
+
+-./machine_status 
+-./machine_status value1
+
+
+
+
+
+Using and manipulating variables :
+
+221. vars_output.sh
+
+$!/bin/bash
+clear
+echo
+read -p "Enter city name:" cityname
+echo "Computer : " $HOSTNAME >> $HOSTNAME"_stats.txt"
+echo "City:" $cityname
+echo "Linux kernel info : " `uname -a` >> $HOSTNAME"_stats.txt"
+echo "Shell Version : " $BASH_VERSION >> $HOSTNAME"_stats.txt"
+clear
+echo
+echo $HOSTNAME"_stats.txtx file written successfully."
+echo
+
+Advance variable manipulating :
+
+222. call_export_var.sh
+
+servername = "prod1"
+export servername
+
+./export_vae.sh
+
+other file : export_vae.sh
+
+clear
+echo
+echo "the server name is :" $servername
+echo
+
+exporting one variable into other variable
+
+223.scope.sh
+
+fun1(){
+
+	#declare sets the variable scoper to localwith this function
+	#declare costcenter="Toronto"
+	costcenter = "Toronto"
+	
+	#when declare is active
+	echo "This is fun1 function, costcenter name is " $costcenter
+}
+
+fun2(){
+
+	fun1
+	echo $costcenter
+
+
+}
+
+fun2
+
+
+
+
+
+224. echo "Kevin said "Hello World""
+225. echo "Kevin said \"Hello World\""
+
+
+226. echo "Stock price is $500"
+227. echo "Stock price is \$500"
+
+228. date
+229. date +'%Y-%m-%d'
+230. echo datevar = date +'%Y-%m-%d'
+231. echo datevar = "date +'%Y-%m-%d'"
+232. echo datevar = `date +'%Y-%m-%d'`
+
+233. echo $costcenter
+234. printf "%s" $costcenter 
+235. printf "%s\n" $costcenter 
+
+236. printf "%.3s\n" $costcenter 
+237. numvar = 5.5 echo $numvar
+
+238. printf "%f\n" $numvar  
+     printf "%d\n" $numvar  
+
+239. numvar = 6573
+printf "%d\n" $numvar  
+
+
+
+
+
+240. dot sourceing
+
+function userinfo(){
+
+	echo "Current Username: " @USER
+	echo "User home directory path: " @HOME
+}
+
+function ipinfo(){
+
+IP_VAR = ifconfig eth0 | grep "inet addr" | tr -s " " ":" cut -f4 -d":"
+
+DGW_VAR = ip route show | grep "default" | tr -s " " ":" cut -f3 -d":"
+
+echo "IP ADDRESS: " $IP_VAR
+echo "DEFAULT GATEWAY: " $DGW_VAR
+cat /etc/resolv.conf | grep "nameserver" | grep -v "#"
+
+}
+
+clear 
+userinfo
+ipinfo
+
+
+-./func_lib.sh
+-. ./func_lib.sh : dot sourcingte
+userinfo
+ipinfo
+
+
+
+
+241. passsing parameter to function
+
+function grt_salestax {
+
+	if test "$1" = ""
+	then 
+		echo "You must supply a full expense amount"
+		return
+	else 
+		echo "Full Epense Amount : "$1
+		nontax_amount = echo "$1/1.15" | bc 			# bc- basic calculator
+		tax_amount = echo "$1-$nontax_amount" | bc
+		echo "Non tax Amount :" $nontax_amount
+		echo "Tax Amount :" tax_amount	
+
+		return $tax_amount
+	fi
+	echo "Operation completed successfully"
+
+
+
+
+}
+
+
+
+
+
+242. fun.sh
+
+function userinput{
+	
+	read -p "Enter name of costcenter : " costcenter
+
+}
+
+call.sh
+
+. ./fun.sh
+userinput 
+echo "The costcenter is :" $costcenter
+
+
+
+243. Arrays:
+cities=(Halifax Toronto)
+echo $cities 
+echo ${cities[1]}
+
+
+244. check if file exists : 
+
+
+
+if [-f /var/log/messages]
+then 
+	echo "/var/log/messages exists"
+fi
+
+245.
+
+if ["$(whoami)" !='root'];
+then
+	echo "You are not logged in as the root user"
+else 
+	echo "You are currently logged in as the root user"
+fi
+
+
+246. 
+
+read -p "Enter a value larger than 10:" n
+if test $n -gt 10
+then 
+	echo "$n is larger than 10"
+fi
+
+
+
+
+
+
+247. for loop
+for file in $(ls);
+do 
+	echo filename : $file
+done
+
+248. while loop
+
+
+while true
+do 
+clear 
+echo "MENU"
+echo "-----------"
+echo 
+echo "1-continue"
+echo 
+echo "2-Quit"
+
+echo
+echo "Enter choice"
+read selection
+echo
+case $selection in 
+	2) clear;exit
+esac
+done
+
+
+249. while true
+do 
+clear
+echo
+echo "MENU"
+echo "---------------"
+echo 
+echo "1 - show ID addressses fro $HOSTNAME"
+echo
+echo "2- Quit"
+echo 
+echo "Enter choice:"
+read selection
+echo
+case $selection in
+	1) ifconfig em0 | grep inet;read junk;;
+	2) clear;exit
+esac
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Conditional statements:
+
+250. if [condition]
+     then 
+	statement 1
+	statement 2
+     fi
+
+------------------------
+     if [condition]
+     then 
+	statement 1
+	statement 2
+     else
+	statement 1
+     fi
+-------------------------
+     if [condition]
+     then 
+	statement 1
+	statement 2
+     elfi
+	statement 1
+     fi
+-------------------------
+	
+     if [condition]
+     then 
+	statement 1
+	statement 2
+     elif    
+ 	statement 2
+     else
+	statement 1
+     fi
+
+----------------------
+types
+- if [condition] 
+- if test condition
+	Relational opreators -->-lt,-gt,-a,-o ...
+- if ((condition))
+	Relational opreators --> >,<=,== .....
+
+
+
+echo "Enter a value"
+read val
+if [$val -eq 10]
+	then
+	echo "I am 10"
+fi
+echo "End of program"
+
+
+251. 
+
+echo "Enter a value"
+read val
+if [$val -eq 10]
+	then
+	echo "I am 10"
+else
+	echo "I am not 10"
+fi
+echo "End of program"
+
+
+253.
+echo "Enter a value"
+read val
+if [$val -eq 10]
+	then
+	echo "I am 10"
+elif [$val -eq 11]
+	then 
+	echo "I am 11"
+else
+	echo "I am neither 10 nor 11"
+fi
+echo "End of program"
+
+
+254.
+echo "Enter a value"
+read val
+if [ $val -eq 10 -o $val -eq 20 ]
+	then
+	echo "I am 10 or 20"
+elif [ $val -eq 11 ]
+	then 
+	echo "I am 11"
+else
+	echo "I am neither 10 nor 11"
+fi
+echo "End of program"
+
+255.
+echo "Enter a value"
+read val
+if (( val == 10 || val == 20 ]
+	then
+	echo "I am 10 or 20"
+elif test $val -eq 11 
+	then 
+	echo "I am 11"
+else
+	echo "I am neither 10 nor 11"
+fi
+echo "End of program"
+
+
+256. 
+
+-f = check if it is a file
+-d = ccheck if it is directory
+-x = check if it is executable
+
+echo -n "Enter a file / dir name : "
+read val
+if [ -f $val ];then 
+	echo "$val is a file"
+elif [ -d $val ];then 
+	echo "$val is dir"
+else 
+	echo "File/Dir doesn't exist"
+fi
+
+
+257. 
+
+echo -n "Enter a file / dir name : "
+read val
+if [ -f $val ];then 
+	if[ -x $val ];then 
+		echo "$val is an executable file"
+	else 
+		echo "$val is an non-executable file"
+	fi
+elif [ -d $val ];then 
+	echo "$val is dir"
+else 
+	echo "File/Dir doesn't exist"
+fi
+
+
+echo -n "Enter a file / dir name : "
+read val
+if [ -f $val -a -x $val ];then 
+		echo "$val is an executable file"
+	else 
+		echo "$val is an non-executable file"
+	fi
+elif [ -d $val ];then 
+	echo "$val is dir"
+else 
+	echo "File/Dir doesn't exist"
+fi
+
+
+
+
+258. Case 
+
+echo "Emter the input" 
+read ch
+case $ch in
+	10) echo "Im 10....";;
+	11) echo "Im 11....";;
+	*) echo "Wrong option....";;
+esac
+
+
+echo "Emter the input" 
+read ch
+case $ch in
+	yes|YES|Y|y|yes) echo "Im good....";;
+	no) echo "Im not good ....";;
+	*) echo "Wrong option....";;
+esac
+
+
+
+259. Loops 
+- for
+
+for val in values/iterable-object
+do
+	statement
+done
+
+for itr in `seq start-position stepby end-val`
+do
+	statement
+done
+
+
+for itr in $(seq start-position stepby end-val)
+do 
+	statement
+done
+
+#!bin/ksh
+for itr in {start-position .... end-val.... step}
+do 
+	statement
+done
+
+for((initialization ; condition; expression)){
+	
+	statements
+}
+
+
+
+for itr in 123 Raj Mohite Pune
+do
+	echo $itr
+done
+
+
+for itr `seq 1 1 10`
+do
+	echo $itr
+done
+
+for itr `seq 1 2 10`
+do
+	echo $itr
+done
+
+
+for itr $(seq 10 -1 1)
+do
+	echo $itr
+done
+
+
+//use ksh to compile
+for itr {1..10..1} 
+do
+	echo $itr
+done
+
+//use bash to compile
+for ((itr=0;itr<10;i++)){
+
+	echo $itr
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+260. while 
+
+initilization 
+while [ condition ]
+do
+	statement
+	expression
+do
+
+-------------------------------
+initilization 
+while test condition 
+do
+	statement
+	expression
+do
+
+-------------------------------
+initilization 
+while (( condition ))
+do
+	statement
+	expression
+do
+
+---------------------------
+
+read n
+itr = 1
+while [itr -lt n]
+//while ((itr < n))
+do
+	echo $itr
+	itr=`expr $itr + 1`
+	//itr=$(itr + 1)
+	//((itr++))
+done
+
+
+261. Until - opposite to while 
+	- runs when condition is false
+
+read n
+itr = 1
+until [itr -gt n]
+//while ((itr > n))
+do
+	echo $itr
+	itr=`expr $itr + 1`
+	//itr=$(itr + 1)
+	//((itr++))
+done
+
+
+
+---------------------
+
+262. functions
+
+sumof2nos(){
+
+	echo "Enter 2 no.s"
+	read a b
+	sum = $((a+b))
+	echo "sum of $a and $b is : $sum"
+
+}
+
+sumof2nos
+
+263. 
+sumof2nos(){
+
+	sum = $(($1+$2))
+	echo "sum of $a and $b is : $sum"
+
+}
+
+sumof2nos 10 20
+
+
+264. 
+sumof2nos(){
+
+	sum = $(($@))
+	echo "sum is : $sum"
+
+}
+
+sumof2nos 10 20 30 40 50
+
+
+
+
+sumof2nos(){
+
+	sum = 0
+	for val in $a
+	do 	
+		((sum = sum+val))
+	done
+	return $sum"
+
+}
+
+sumof2nos 10 20 30 40 50
+echo "Sum of n nos is : $?"
+
+
+
+265. global variable
+
+gval = 10
+fun(){
+	
+	lval=20
+	echo "G val = " $gval
+	echo "L val = " $lval
+}
+
+echo "G val = " $gval
+echo "L val = " $lval
+fun
+
+
+val = 10
+fun(){
+	
+	local val=20
+	echo "G val = " $val	//20
+	 
+}
+
+fun
+echo "G val = " $val		//10
+
+
+
+266. command line argument
+
+for val in $@
+do
+	echo $val
+done
+
+sh filename.sh 10 20 30 40 
+
+
+
+
+267. recurrsion
+factoral
+
+res = 1
+fact (){
+
+	n=$1
+	if((n ===1 && n==0));then
+		return 1
+	else
+		res=$((res * n))
+		fact $((n-1))
+		return $res
+	fi
+}
+
+fact 5
+echo $?
+
+
+
+268. ps : shows running processes
+kill process_id : kill process
+kill -9 process_id : kill process forcefully
+
+
+
+
+
+
+269. cat > emp
+123#Samuel#Chennai#97984
+125#Edison#Delhi#87562
+124#Sugan#Chennai#7475487
+126#Jordan#Mumbai#97398748
+127#Blesson#Pune#6742652
+
+awk -F'#' '{print $2}' emp
+
+270. awk -F'#' '{print FNR"#"}' emp
+271. awk -F'#' '{print FNR"#}$0' emp
+
+272. awk -F'#' '{print NR}' emp
+273. awk -F'#' '{print NF}' emp
+274. awk -F'#' 'END{print NR" Records and " NF"Columns"}' emp
+275. awk -F'#' '$4 < 100000 {print}' emp
+276. awk -F'#' 'NR >=3 {print}' emp
+
+277. awk '{printf("%5d %-10s %-10s %10d\n" $1,$2,$3,$4)}' emp
+278. awk -F'#' '{printf("%5d %-10s %-10s %10d\n" $1,$2,$3,$4)}' emp
+
+279. awk -F"#" '$4 < 100000 {print}' emp
+280. awk -F"#" 'NR >= 3 {print}' emp
+
+281.  cat > stuinfo
+123 Samuel 98 78 76 65 54
+124 Sugan 99 88 77 66 55
+125 Edison 91 82 73 64 55 
+
+281.awk '{ for(i=3;i<=7;i++) tot+=$i; print tot}' stuinfo
+282.awk '{ for(i=3;i<=7;i++) tot+=$i; print$2"  "tot}' stuinfo
+
+cat > marks
+Eng 95
+Mat 97
+Sci 91
+Cs 90
+283. awk '{tot+=$2} END{print tot}' mymarks
+283. awk '{tot+=$2} {print $0} END{print tot}' mymarks
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

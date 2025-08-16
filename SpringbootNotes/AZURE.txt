@@ -1,0 +1,1136 @@
+
+------------------------------------------------ Basics-------------------------------------
+Microsoft Azure
+
+Azure Data Center : 
+	-Physical Facilities (Buliding with huge computing machine)
+	-Data centers are present in 140 countries around the world
+	-Need physical security
+	-Physical address of data center is not disclosed
+	
+Components : 
+-HVAC (Air condition units)
+-Equipment rack
+-Hypervisor server
+-Router ,Switches,UPSs(Generators)
+-Storage Array
+
+
+Azure regions:
+-Geographical region where resources are deployed
+-54 regions ,140 countires
+-Undisclosed Azur Goverment regions
+-Region contains data centers with high speed internet data links 
+
+Azure Avability Zones:
+-No. of data centres in particular zone
+-Replicate data between AZs.
+-Consist of one ore more data centers
+-High Avalibility
+-Falut Domain
+-Update Domain
+
+Azur Resourse Manager:
+-Anything that u deploy on Azure(VMs,Storage Accounts,Applications);
+-Manage related resourse as a group
+-Used for Azure resourse deployment
+-Provide Azure Resourse maanagement 
+-
+
+Azure Portal : 
+-GUI management tool(Web Application)
+-Creat eand manage Azure resources
+-Create , edit,import and download templates
+-Tag resoureces
+-Search for resources on Azure Portal
+-Azure Cloud Shell
+
+Azure CLI : 
+-Command Line Interface
+-Azur Cloud Shell
+-Downloaded on Machine
+
+-----------------------------------------------------------------------------------------------
+ 
+#Azure Blod Storage 
+
+-Unstructured Data
+-High Avalibility 
+-Encrypted
+-Scalable
+-Managed Sevices
+-Client access libraries
+
+Parts of blob storage:
+-Storage Account
+-Container
+-Files and Blobs
+
+Access Contorl to blob storage
+-Azure Active directory
+-Shared key
+-Shared Access signature
+-Anonymous Access
+
+
+Data Encryption:
+1. At rest
+2. Client side
+
+
+
+Blob storage Performance tires:
+1. Standard Tire
+2. Premium Tire
+
+Blob storage Access tires:
+1. Hot tire:
+-Highest storage cost and less access cost
+-Frequently access data
+-Tire is stored at storage account level
+
+2. Cold tire:
+-Less storage cost but has access cost
+-Unfrequently access data
+-Tire is stored at account level
+
+3. Arvhive storage
+- Less Storage cost but high access cost
+- Tire is stored at blob level
+- Data is not directly available
+
+
+
+Azure Storage Global Redundancy:
+-Regions Replication
+-Availablility zones
+-Manual failover
+-Last Scan time 
+
+Locally redundant Storage:
+-3 replicas within the data center
+-Cheapest redudant storage
+-Eleven 9s durability
+-Syncronuous writes
+
+Zone Redundant Storage:
+-3 replicas over 3 avalibility zones
+-12 9s durability
+-Auomated failover
+-Geo-restrictions
+-No archive Tier
+-Only hot and cool redundant
+
+Geo-Redundant:
+-3LRS copies in primary region
+-Asynchronous to secondary regoin
+-3 LRS copies in sceondary region
+
+Geo-zero-Redundant:
+-Zero redundant in primary region
+-6 9s durability
+-LRS copies in sceondary region
+-General purpose v2 only
+
+Storage disastar Recovery:
+- Geo-redundant :- Replicates data into another zones in primary regoin
+- Geo-Zone-region :- Replicates data into 3 other zones
+
+
+
+
+Azure Data Lake Storage Gen2:
+-Central repo for structured and unstructured data 
+-Azure Blob Storage
+-Hierarchical Namespace
+-File System driver 
+-ABFS Connerctor
+
+
+Processing Big data using Azure Data Link:
+S1:Ingest Data (Sensores,other input system)
+S2:Store
+S3:Data Preparation
+S4:Presentation
+
+Types:
+Batch processing
+Stream processing
+
+*Components:
+-Source(Storage, sensors)
+-Storage
+-Process
+-Processed data storage (Strucutred Data)
+-Reporting
+
+--
+
+
+Data Lake Storage:
+-Data lakes are consolidated repositery for organisatoin data in structured or unstructured form.
+-Raw State Data
+-Accessibity
+-Timeliness
+-SelfService
+-Multiple resource
+-Secure(Data Security,Access Control,Network Security,Application Security)
+-Scalable
+
+Characterstices:
+-Centralized and raw format
+-Rapid ingestion
+-mapping and control data
+-Data catloge
+
+File format in Data Lake :
+-Text or Binary files
+-dataTypes(Scalar(single unit,Complex(multiple scalar))
+-Schema
+-OLTP(High level of data intigrity)
+
+ADLS Authorization : 
+- Shared Key
+- Shared access signature
+- Azure role-based access control
+- Access contorl list
+
+Azure Database Auditing :
+-Track database events
+-Writes events to audit log
+-Azure storage,Log Analytics,Event hub
+
+
+Azure Key Vaults:
+-It is a cloud service which stores and access secrets like password,certificates and other keys.
+
+Types of key vaults container :
+1. Vaults : 	
+- It supports software and HSM keys,secrets and certificates
+
+2. Managed Hardware Security Module pools:
+- It supports HSM keys.
+
+Authenticating with key vault:
+-Managed indentities for Azure resources
+-Service principal and certificate
+-Service principal and secrets
+
+
+
+Azure Private Endpoint
+-It is a network interface that connect privately and securely to a service provided by azure by a private link.
+-It uses private IP address
+-It is secur eand private 
+Features : 
+-Local Or remote connection.(within vnet or out of vnet)
+-Connections initiated	by endpoints users
+-Read -oly network interface
+-Can create one or multiple private endpoints
+
+
+Virtual Network Service Endpoints;
+-It is a direct, secure connection between endpoints
+-It have optimized routes
+-Private Id addresses ca reach endpoints
+
+
+
+
+
+
+Data Catalog : 
+-Find existing data
+-Discover new data sources
+-Collect metadata
+-Categorize and assing tags
+
+Buliding a data catalog:
+-Collect metadata
+-Sample data
+-Apply naming convention
+-Query Log
+-Optimize
+
+Big data File Format :
+-Comma Seperated Values(CSV)
+-JavaScript object Noattion(JSON)
+-Extensible Markup Language(XML)
+-Apache Avro
+
+
+
+
+
+Partitioning Data:
+Purpose : 
+-Improve Availability
+-Improve performance
+-Improve Scalability
+-Improve Security
+
+
+Disining Partitions : 
+-Minimize cross-partiton joins
+-Replicte static reference data
+-Peridically rebalance shards
+
+
+Types:
+Horizontal Partitioning : 
+-Partitioning data into mulitiple records according to key
+-Choose Correct Sharing key
+-Avoid creating hot partitions
+
+
+
+Vertical Partitioning :
+-Set Security controls for each partition
+-Reduce concurrent access
+-Seperate slow-moving and dynamic data
+-reduce I/o and performing cost
+
+Functional Partitioning :
+-Improve insolation and data access performance
+-Seperate read-olny and read-write data
+
+
+
+
+
+
+
+Data Partitioning strategies:
+1. Partitioning Azure SQL Database
+-Elastic pools support horizontal scaling for a SQL database.
+-Using elastic pools, you can partition your data into shards that are spread across multiple SQL databases
+-Shards can hold more than one databases call shardlets
+-Shard map shardlets should have the same schema
+-
+
+2.  Partitioning Cosmos Database
+-
+
+
+3. Table Storage Partitioning:
+-Select a partition and row key by how data is accessed
+-Supporta transactional operation in the same partiotin
+-Use vertical partitioning for dividing fields into groups
+-Data is held in row key order
+-Always specify the partition to scan
+
+4. Azure Search Partitioning:
+-create an instance per geographic region
+-Create a loacl and global serivce
+-Can be divided into 1,4,6 10 partition
+
+5. Azure Service bus Partitioning;
+-Queues and topics are scoped in Service bus nameapsce
+-
+
+	  
+Workloads :-
+1. Transactional Workloads:
+- Manage and control bussiness operations
+-Simple , standardized queries
+-High level of concurrent reads
+-Centered on Insert,Delete and Upddate commands
+
+
+2. Analytical Workloads:
+-Provide data for reporting, decision making,planning
+-Large ,complex queries
+-Low level of concurrent reads and writes
+-Generally centered on the SELECT command
+
+
+
+Slowly Changing Dimensions :
+-It is a technique used in dataware house, where dimensional change it captured over time
+
+types:
+1. Type 0-Retain Original
+-Dimension attribute never change
+-Facts are grouped by original value
+-their will always be original attribute as a base line
+-Includes attributes like time and date
+-eg. DOB
+
+2. Type 1-Overwrite:
+-overwritting old values with new value
+-Facilitates Dimensin update
+-Limits growth of new records
+
+3. Type 2-Add Records:
+-in this technique when dimension value changes new records are added to facts table	
+-And set original values to inactive
+
+4. Type 3-Add Atributtes
+-their are two realities of data also called alternate relaity
+-Add new cloumns to facts table use to store value old value of table when it chnaged
+-two values are maintained ,new value and past value
+
+5. Type 4-Add history
+-Here complete historical table is created, rather than add it to existing table
+-Type 5 is special case of type 4.	
+6. Type 4-Combined Approach
+-Here we use above types to create customise type
+-
+
+
+Star schema : 
+-Primary key of multiple dimension tables is stored in single/multiple table called fact table.
+- Dimesnion tables not normalized(duplication of data) 
+-More space ,less complex  
+-Faster,less complex queries
+-include redundant data
+
+
+Snowflake schema:
+-Here Dimension table are further divided into smaller dimensions.
+- Dimesnion tables normalized(no duplication of data)
+- Less space ,more complex  
+- Slower , more complex queries
+- No redundant data
+
+
+
+Analytic data processing layers:
+1. Speed serving layer:
+- Process is near realtime data
+- Data is stored randomly
+- Speed over accuracy
+- Latency is in seconds or milliseconds
+
+2. Batch Serving layer:
+- Process is done batch wise
+- Accuracy over Speed 
+- Latency is in minutes or hours or days
+- used in AI and ML.
+
+
+
+*Logical Data Structures :
+
+Temporal Database Tables:
+-Current Table : Contains current record .
+-History Table : The original data of the rows that are inserted, deleted, updated or merged is written to history table
+
+-SQL query : 
+	create table dbo.student(
+	[StudentId] int NOT NULL PRIMARY KEY CLUSTERED,
+	[FristName] nvarchar(100) NOT NULL,
+	[LastName] nvarchar(100) NOT NULL,
+	[DOB] datetime2 NOT NULL,
+	[ValidFrom] datetime2 GENERATED ALWAYS as ROW START,
+	[ValidTo] datetime2 GENERATED ALWAYS as ROW END
+	,Period FOR SYSTEM_TIME(ValidFrom,ValidTo)
+	)
+	WITH(SYSTEM_VERSIONING = ON (HISTORY_TABLE = dbo.SyudentHistory));
+
+
+
+Azure Data Encryption : 
+Types : 
+-Encryption in motion
+-Encryption at rest
+
+*Azure Encryption Models : 
+1. Client-side encryption
+-Encryption is done outside resource provider
+-Service application or on-site applcation
+-Azure receives encrypted blob
+-Key management performed by intiating service or applicatoiin
+
+2. Server-side encryption
+- Resource provider performs encryption
+-Keys are managed by provider or customer
+
+
+
+Transparent Data Encryption(TDE) : 
+-It is use to protect data in Azure SQL DB, Azure SQK Managed Instance, Azure Synapse Analytics
+from threats and other malacious activities.
+-It encrypts and decrypts data at real-time 
+-For defalut TDE is enabaled for any new SQL Databases
+-It encrypts and decrypts data at page level
+-Their is key associate with Encryption and decryptions known as Database Encryption key(DEK)
+-DEK is protected by TDE protector
+
+Types:
+- Service - managed TDE
+- Customer - managed TDE
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------Microsoft Offical-------------------------------------------------------
+
+
+What is data engineering?
+	-In most organizations, a data engineer is the primary role responsible for integrating, transforming, and consolidating data 
+	 from various structured and unstructured data systems into structures that are suitable for building analytics solutions. 
+	 An Azure data engineer also helps ensure that data pipelines and data stores are high-performing, efficient, organized, and 
+	 reliable, given a specific set of business requirements and constraints
+	-Operations like integrating, migrating, transformation, sorting data as required  
+
+Types of data :
+1. Structured Data :- It primarily comes from table-based source systems such as a relational databasesor from csv files.
+		      In structured files the rows and columns asr aligned consistently throughout the file.
+
+2. Semi-Structured Data :-The data is data such as JavaScript Object notation file, which may required flattening prior to loading into your source system.
+			  This data does not fit neatly into a table structure.
+
+3. Unstructured :- This data includes data stored as key-value pairs that don't adher to standard relational models.
+		   Other types of unstructured data are commonlt used unclude portable data format(PDF), word docs or images.	
+
+
+
+
+
+Data Operations:
+
+1. Data Integration:- It involves establishing links between operational and analytical services and data source
+		      to enable secure,reliable access to data across multiple systems.
+
+
+2. Data Consolidation :- It is process of combining data that has been extracted from multiple data source into a 
+			 consistent structure - like analytics and reporting.
+			 Commonly, data from operational systems is extracted, transformed, and loaded into analytical
+			 stores such as a data lake or data warehouse.
+
+Common languages:- SQL, Python , R, Java, Scala, .NET
+
+
+
+Important data engineer Concepts:
+1. Operational and analytical data : 
+			-Operational data is usually transactional data that is generated and stored by application,
+			 often in a relational or non-relational database
+			-Analytical data is the data that has be optimized for analysis on reporting, often in a data warehouse
+
+2. Streaming Data : 
+			-Streaming data refers to perpetual source of data that generates data value in real-time, often
+			 relating to a specific events. e.g IoT, social media feeds
+ 
+3. Data Pipeline :
+			- It is used to orchestrate activities that transfer and transform data. Pipeline are the primary way
+			 to implement repetable extract, transform and load solution when triggered.
+
+4. Data lake : 		-A data lake is a storage repository that holds large amount of data in native, raw format.
+			 Data lake stores are optimized for sacling to massive vloumes(TB,PB). Idea is to store data 
+			 in itsoriginal, untransformed state.
+
+5. Data Warehouse:
+			- A data warehouse is a centralized repository of integrated data from one or more disparate source
+			 Data warehouse store current and historical data in relational tables that are organized into a 
+			 schema that optimizes performance
+
+6. Apache Spark:
+			-Apache Sparl is a parallel processing framework that takes advantage of in-memory processing 
+			 and distributed file storage.
+
+ 
+
+
+Data Engineering in Microsoft Azure -
+
+
+Operational Data		Data Ingestion/ETL and  Analytical data storage		Data modeling		
+
+Azure SQL Database		Azure Synapse Analytics					Microsoft Power BI.
+Azure Cosmos DB	   ------->	Azure Data Lake Storage Gen2
+Microsoft Dataverse		Azure Stream Analytics		---------->
+				Azure Data Factory
+				Azure Databricks
+
+
+
+ADLS :
+	- A data lake provides file-based storage, usually in a distributed file system that supports high scalability for 
+	 massive volumes of data. 
+	- Organizations can store structured, semi-structured, and unstructured files in the data lake and then consume
+	  them from there in big data processing technologies, such as Apache Spark.
+	- Azure Data Lake Storage is a comprehensive, massively scalable, secure, and cost-effective data lake solution 
+	  for high performance analytics built into Azure.
+	- Data Lake Storage is designed to deal with this variety and volume of data at exabyte
+	- Security : Data Lake Storage supports access control lists (ACLs) and Portable Operating System Interface (POSIX) permissions
+	- You can set permissions at a directory level or file level for the data stored within the data lake, providing
+	  a much more secure storage system.
+	- Azure Data Lake Storage organizes the stored data into a hierarchy of directories and subdirectories, much like a file system,
+	  for easier navigation. As a result, data processing requires less computational resources, reducing both the time and cost.
+
+
+
+
+Stages of processing Big Data : 
+1. Ingest -  The ingestion phase identifies the technology and processes that are used to acquire the source data.
+	     This data can come from files, logs, and other types of unstructured data that must be put into the data lake.
+
+
+2. Store -  The store phase identifies where the ingested data should be placed. 
+	    Azure Data Lake Storage Gen2 provides a secure and scalable storage solution that is compatible with commonly 
+	    used big data processing technologies.
+
+
+3. Prep and Train - The prep and train phase identifies the technologies that are used to perform data preparation and model training and scoring for machine learning solutions. 
+		    Common technologies that are used in this phase are Azure Synapse Analytics, Azure Databricks, Azure HDInsight, and Azure Machine Learning.
+
+4. Model and serve - Finally, the model and serve phase involves the techologies that will present the data to users.
+		     These technologies can include visualization tools such as Microsoft Power BI.
+
+
+
+
+
+
+What is Azure Synapse Analytics :
+		- Azure Synapse Analytics provides a cloud platform for analytical workloads like Descriptive analytics, Diagnostic
+		  analytics ,Predictive analytics,Prescriptive analytics, through support for multiple data storage, processing, and
+		  analysis technologies in a single, integrated solution. 
+
+Creating and using Azure Synapse Analytics :
+		- A Synapse Analytics workspace defines an instance of the Synapse Analytics service in which you can manage the 
+		  services and data resources needed for your analytics solution.
+		- You can create a Synapse Analytics workspace : Azure portal, Azure PowerShell, Azure command-line interface (CLI),
+		  Azure Resource Manager or Bicep template
+		- After creating a Synapse Analytics workspace, you can manage the services in it and perform data analytics
+
+Working with files in a data lake :
+		- Data files can be stored and processed at big scale using linked services.
+
+Ingesting and transforming data with pipelines:
+		- Azure SA has built-in support for creating, running, and managing pipelines that orchestrate the activities
+		  necessary to retrive data from multiple sources and to transform to a required destinaiton
+Querying and manipulating data with SQL :
+		-Azure Synapse Analytics supports SQL-based data querying and manipulation through two kinds of SQL pool 
+		 that are based on the SQL Server relational database engine:
+			1. A built-in serverless pool that is optimized for using relational SQL semantics to query file-based data in a data lake.
+			2. Custom dedicated SQL pools that host relational data warehouses.
+
+Processing and analyzing data with Apache Spark :
+		- Apache Spark is an open source platform for big data analytics. Spark performs distributed processing of files in a data lake 
+		  by running jobs that can be implemented using any of a range of supported programming languages. 
+		- Languages supported in Spark include Python, Scala, Java, SQL, and C#.
+
+Exploring data with Data Explorer :
+		-Azure Synapse Data Explorer is a data processing engine in Azure Synapse Analytics that is 
+		 based on the Azure Data Explorer service
+
+Integrating with other Azure data services :
+		-Azure Synapse Link ,Microsoft Power BI ,Microsoft Purview ,Azure Machine Learning
+
+
+
+
+When to use Azure Synapse Analytics :
+-Large-scale data warehousing
+-Advanced analytics
+-Data exploration and discovery
+-Real time analytics
+-Data integration
+-Integrated analytics
+
+
+
+Apache spark :
+		-Apache Spark is an open-source distributed system that is used for processing big data workloads.
+		-The benefits of creating a Spark pool in Synapse Analytics include.
+			*Speed and efficiency
+			*Ease of creation and Use
+			*Scalability
+
+Azure Synapse pipeline :
+		-It is cloud based ETL and data integration service that allows you to create data driven workflow for orchestrating data 
+		 movement and transforing data at scale.
+
+
+
+ADF / Azure Synapse Pipeline components :
+1. Linked services - It is an object of data factory which helps to connect with the varity of data sources.
+		     It unables you to ingest data from a data source and further used for transformation and analysis.
+
+2. Dataset : -When the linked service is defined, a dataset is generated in a data factory .
+	      Dataset represent data structure within the data store that is being referenced by the linked service.
+
+3. Activities : - It typically conatins the transformation logic or the analysis commands of AFD's  work.
+		  Activities like Copy activity that can be used to ingest data from a variety of data sources.   
+
+
+4. Pipeline : - It is a object of ADF which is use to run multiple activities together.
+		Parts of pipeline(Parameters,Control flow,Integration runtime)
+
+
+
+
+
+
+
+
+Understanding Azure Synapse Analytical processes : 
+
+1. Data Ingestion and Prepartion 
+-Data is store in Azure Data Lake Store
+-To ingest data we can use Azure Data Factory(code free)
+-To prepare data azure provide Azure Databricks or SSIS in ADF
+
+2. Making data ready for consumption by Analytical tools:
+- Azure Synapse Analytics is a tool use to get analytical solution.
+
+3. Providing access to data and using data visualization tools:
+-Power BI enables customers to build visualizations on massive amounts of data
+-Power BI supports an enormous set of data sources, which can be queried live, or be used to model and 
+ingest, for detailed analysis and visualization.
+
+
+
+
+Develop hub:
+-The Develop hub is where you manage SQL scripts, Synapse notebooks, data flows, and Power BI reports.
+
+
+Data hub:
+-The data hub provides you with the ability to interact and explore with source data, and linked services
+
+
+Monitor hub :
+- Use the Monitor hub to view pipeline and trigger runs, view the status of the various integration
+runtimes that are running, view Apache Spark jobs, SQL requests, and data flow debug activities.
+
+
+
+
+
+
+Design a Modern Data Warehouse using Azure Synapse Analytics :
+
+Modern data warehouse :
+-It let you bring all type of data at any scale easily, further processed to get insights.
+-Features (Scalabiiity,new varities of data, data velocities)
+
+The process of building a modern data warehouse typically consists of:
+- Data Ingestion and Preparation.
+- Making the data ready for consumption by analytical tools.
+- Providing access to the data, in a shaped format so that it can easily be consumed by data visualization tools.
+
+
+
+Ingest streaming data into Synapse dedicated SQL pools :
+-Processing data that arrives at real-time or near real-time is referred to as streaming data processing. 
+-Streaming data sources can include IoT devices and sensors, financial transactions, web clickstream data, factories, and medical devices.
+-Azure offers purpose-built stream ingestion services such as Azure IoT Hub and Azure Event Hubs that are robust, proven, and performant
+-If you want to store data into your data lake, such as the ADLS account associated with your Synapse Analytics workspace, 
+ then use Synapse Spark notebooks or T-SQL queries with a serverless SQL pool to explore and transform the data.
+-Or if you want to land the streaming data in a dedicated SQL pool, a couple of options you can take are to first process and store the 
+data into your data lake, as described above. Then load the data into a dedicated SQL pool through one of the various 
+data loading techniques, such as Synapse Pipelines, Synapse Spark pools, or COPY statements.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+--------------------------------------Azure Databricks------------------------------------------------------------------
+
+Azure Databricks :
+-Azure Databricks is a service by Azure that is deployed throung Azure marketspace
+-It allows us to run application in Serverless spark-based workspace
+-You can manage Azure Databricks via a UI or APIs.
+-It allows us to create workbooks in workspace which runs on spark custers
+-Supports languages like Scala,Pyhton,R and SQL
+- It can be integrated with other Azure services like. synapse and Analytics , blob storage.
+-Also integrates with PowerBI
+-Role-based security
+
+Azure Databricks Cluster : 
+-Configured computational resource(Apache spark cluster)
+-Apache spark cluster is a platform for running apache spark
+-It is use to handel big data processing in paraller for high performance
+-Can run one or more workloads
+Types :
+1. All purpose cluster
+-Manual start/stop/restart
+-Use for collaborative analysis
+-
+
+2. Job cluster
+-It is scheduled cluster
+-Cluster terminates on job completion
+-Cannot restart
+
+
+
+
+Azure Databricks Processing :
+1.Parallel Processing : 
+-Improves performance
+-Makes better use of resources
+-Requires a prallel workloads
+
+a.Prallel collection enumeration;
+-faster then enumerating in sequesce
+-As many threads as cores
+-Spark scheduler may not threads in prallel
+
+
+b.Fair scheduler pool :
+-Faster then paraller collection enumeration
+-threads count not limited by cores
+-Spark runs pools in parallel
+
+
+2. Batch processing :
+-It prepares large chunk of data for analysis
+-This is processing is best use for offline data processing
+-It supports many languages(R,Scala,Python,SQL)
+-Manages cluster
+-Autoscale
+-Integrates with azure active directory
+
+
+3.Stream Processing:
+-Process incoming messsage with minimal latency(near real time)
+-It often use to detactes real time patterns of data
+-Allows impreative and declarativeprogramming;
+-Supports languages like (C#,Python,Scala)
+-Supportsserval inputs (Event Hub,Data lake,IoT Hub)
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+--------------------------------------------------Azure Data Factory--------------------------------------------------------
+
+Azure Data Factory
+-ADF is a data integration service that is used to create automated data pipeline that can be used to copy and transform data.
+
+Triggers:
+-It is a feature of ADF which initiate an execution of pipeline.
+Types:
+1. Schedule trigger :
+-It allows a to create Recurrence schedule
+-It is a calander based trigger.
+-Fire and forget type of trigger
+-eg. Firing a trigger on friday at 2 pm.
+-Less accurate trigger
+-Cannot run the events left in past
+eg. If a trigger is deactivated for a week, schedule trigger will not run the event of that week.
+
+2.Tumbling Window Trigger:
+-Recurrences schedule
+-Time window do not overlap
+-Maintain state and Allow backfill : Can run the events left in past/maintain state
+eg. If a trigger is deactivated for a week, tumbling trigger will run the event of that week.
+It will check for the last run and start from that event.
+- Accurate trigger
+-Automatice retires on fails
+-Used in case of time sensitive events
+
+3. Storage event trigger:
+-It firstly monitora storage account container
+-Pipeline run will be triggered on the changes in the storage
+-It fires on bolb creation or deletion
+
+4. Custom Event trigger:
+-It is similer to Storage event trigger, but it listns to a event gird which is configured.
+-Fires on customs event types
+
+ 
+----------------------------------------------------------Basic Praticals---------------------------------------------------------------------- 
+
+
+
+# Azure Synapse Analytics 
+-Creating SQL Database and impleminting Dimensional Hierarchies.
+-Create Azure Synapse Analytics 
+-Upload data using ADLS
+
+-Create and add Data using SQL pool.
+-Create and add Data using Apache Spark Cluster in Spark SQL pool.
+-Create pools in Azure Synapse Analytics and share data between them.
+
+
+-Create and manage virtual network and private endpoint
+
+-Managing Access control list
+-Using Azure Role-based Access
+-Auditing on an Azure SQl Database and Veiw audit logs.
+
+-Create key vault and managing Transparent Data Encryption.
+-Implementing Always Encrypted
+
+
+-Create cluster in DataBricks and access data from files
+-Securing Azure Database data and masking required data
+
+-Managing ADLS from Visual Studio code.
+
+-Perform ETL operation using DataBricks, transforming data from ADLS to Synapes Dedicated SQL pool 
+-Transforming data using Spark in Azure Data factory (Remove age field)
+
+-Transforming data using Dataflow in Azure Data factory(Inventory data)
+
+
+-Transforming data using Azure Synapse notebook (us_500)
+
+
+-Creating event hub, using Databricks to write and read data to and from event hub.
+-Running Databricks notebook using ADF and accessing data from ADLS
+
+-Creating stream data using and databricks and sending it to event hub and then to storage
+
+#Azure Data Bricks
+-Creating and working with Azure Databricks workbook.
+- Working with Azure Databricks jobs.
+-Create stream with SQL database and read data using Databricks
+-Create CosmosDB and endpoints and access data using Databricks
+-ETL using DataBricks
+-Performing sentimental analysis using Databricks
+
+
+#Azure Data Factory
+-Create azure data factory, copy data from source to destination using pipeline and check schema drift
+-Create azure data factory pipeline, copy data from source to destination using schedule trigger.
+-Create azure data factory pipeline, copy data from source to destination using dataflow and running them parallerly
+-Potimizing Pipeline in DAta Factory Pieline
+-Create azure data factory pipeline, copy data from storage account to Azure SQL DB using dataflow and utilizing upsert
+-Troubleshooting Azure Stream Analytics
+-Designing and implementing incremental data loads using ADF and transform data from storage to SQL DB
+
+
+----------------------------------------------------- Exam Notes----------------------------------------------------------------
+
+
+
+Notes :
+-Flatten flattens JSON arrays.
+-Parse parses data.
+-Unpivot creates new rows based on the names of columns.
+-Pivot creates new columns based on the values of rows.
+
+-Enabling sampling in source1 allows you to specify how many rows to retrieve.
+-Enabling staging in Pipeline1 just uses a staging area in Azure Synapse.
+-Creating a new integration runtime for Pipeline1 can increase performance, but it will not reduce the number of rows retrieved from source1.
+-Setting the Filter by last modified setting in source1 filters files by date.
+
+-The OPENJSON command converts a JSON document into table format.
+-Granting access to Data Lake Storage Gen2 is done through RBAC.
+-By using CORS, you can specify which domains a web request is allowed to respond to
+
+
+
+-------------------------------------------------------DP-203--------------------------------------------------------
+Practics test:
+1. hash
+2. data residency
+3. horizontal partitioning on the source data
+4. functional
+5. Healthcare Provider
+6. Create a master key in the database.
+7. Enable data classification in Microsoft Purview.
+8. Azure Synapse Analytics database templates
+9. the Microsoft Purview governance portal
+10. wasb://data@datastg.blob.core.windows.net/devices/
+11. derived column,select,sink
+12. new branch
+13. flatten
+14. `Invoke-AzDataFactoryV2Pipeline`
+15. OPENJSON
+16. Upsert
+17. `abfss://container@store.dfs.core.windows.net/products.csv`
+18. Add a new activity with a Success predecessor to Move to Synapse.
+19. DBFS
+20. writeBatchSize to 100,000
+21. 18
+22. Create a job to partition the input into a new event hub that has 12 partitions and change Job1 to use the new job as input.
+    Repartition the input within Job1.
+23. 12
+24. custom event, tumbling window
+25. Enable sampling in source1.
+26. Create an alert in the Data Factory resource.
+27. Azure Key Vault
+28. server names within a connection object
+29. a trigger
+30. df.select("ProductName", "ListPrice").where((df["Category"] == "Cars")
+31. change tracking
+32. SlidingWindow
+33. Completed
+34. Create a certificate that is protected by the master key.
+35. Grant the SELECT permission on the Purchase table to the Marketing users.
+36. Token Management API 2.0
+37. RBAC
+38. a private endpoint from Azure Synapse Analytics in sn2
+39. From the Monitor page of Azure Synapse Studio, review the Pipeline runs tab.
+40. Increase the number of the Streaming Units (SU).
+41. the Gantt view of the pipeline runs
+42. cache, persist
+43. skew
+44. Add diagnostic settings and add Log Analytics as a target.
+    Create a Log Analytics workspace.
+    Create a storage account that has a lifecycle policy.
+45. From Azure portal, create an alert and add the metrics.
+    From the Monitor page of Azure Data Factory Studio, create an alert.
+46. sys.dm_pdw_exec_sessions
+47. `DBCC PDW_SHOWEXECUTIONPLAN (5, 94)`
+48. `Set-AzSqlDatabase`
+49. an aggregate function, the GROUP BY clause
+50. AFTER UPDATE
+
+51. Add a new column to track lineage in Table1.
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
+----------------------------------------------------AZ-900---------------------------------------------------------------------
+
+1. Azure Policy
+2. resource tags
+3. Azure Policy
+4. a web browser
+5. Azure Resource Manager (ARM) templates
+6. Azure Service Health
+
+
+
+
+ 
+
+
+
+notes:
+-OPENROWSET : The easiest way to see to the content of your CSV file is to provide file URL to OPENROWSET function, specify csv FORMAT.
+-CAST : If you want to convert an integer value to a DECIMAL data type in SQL Server use the CAST() function.
+-PIVOT : It rotates a table-valued expression by turning the unique values from one column in the expression into multiple columns in the output
+-UNPIVOT : It carries out the opposite operation to PIVOT by rotating columns of a table-valued expression into column values.
+-AVRO supports timestamps and Avro stores data in a row-based format, An Avro schema is created using JSON format.
+-Parquet stores data in columns
+
+
+
+-Replicated tables are ideal for small star-schema dimension tables,
+ because the fact table is often distributed on a column that is not compatible with the connected dimension tables
+-Hash-distributed - For Fact tables use hash-distribution with clustered columnstore index. Performance improves when two hash tables are joined on the same distribution column.
+
+
+
+-PreserveHierarchy : Preserves the file hierarchy in the target folder. The relative path of the source file to the source folder is identical to the relative path of the target file to the target folder.
+ 
+- FlattenHierarchy: All files from the source folder are in the first level of the target folder. The target files have autogenerated names.
+- MergeFiles: Merges all files from the source folder to one file. If the file name is specified, the merged file name is the specified name. Otherwise, it's an autogenerated file name.
+
+
+
+
+Type3 SDC : A Type 3 SCD supports storing two versions of a dimension member as separate columns. The table includes a column for the current value of a
+	    member plus either the original or previous value of the member. So Type 3 uses additional columns to track one key instance of history
+
+
+-Hopping windows : -this  model scheduled overlapping windows. A hopping window specification consist of three parameters: the timeunit, the windowsize 
+	           (how long each window lasts) and the hopsize (by how much each window moves forward relative to the previous one).
+		   -Hopping window functions hop forward in time by a fixed period. 
+
+-Tumbling window : this functions are used to segment a data stream into distinct time segments and perform a function against them, such as the example below.
+
+
+-Standard clusters are recommended for a single user.
+-A high concurrency cluster is a managed cloud resource. The key benefits of high concurrency clusters are that they provide Apache Spark-native
+ fine-grained sharing for maximum resource utilization and minimum query latencies.
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

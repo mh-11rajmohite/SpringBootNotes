@@ -1,0 +1,114 @@
+Prcessing Big Data:
+-Parallel processing model 
+
+	-Apache Hadoop
+	Data ===> Distributed storage ====> Parallel Processing ====> Results
+		   (small chunks of data)    (processing units)
+
+
+
+Distributed storage - HDFS:
+-It keeps track of chunks of relates data across a cluster
+-Input and output is stored on this system.
+
+Parallel Processing-MapReduce:
+- It is a programming model to process distributed data in parallel
+- It is made of 2 phases : 
+-Map - this phase takes in a set of data and transform it into a set of tuples
+-Reduce-This combines the tuples from the Map phase to generate a result.
+
+YARN (Yet Another Resource Manager):
+-Manages and allocates the cluster resource
+-Figure out how to run MapReduce jobs and stores results in HDFS
+
+
+Apache Spark :
+-An open-source unified analytics engine built on top of Apache Hadoop for large-scale data processing
+-Unified because it process both batch and streaming data.
+
+
+Apache Spark Architecture:
+---------------------------------------------------------------------
+
+RDD 	 Shell 			Spark core	APIs Driver
+
+--------------------------------------------------------------------
+
+				Cluster manager
+
+--------------------------------------------------------------------
+
+				Storage
+
+---------------------------------------------------------------------
+
+				Cluster
+
+---------------------------------------------------------------------
+
+
+
+*Processing Data in cluster:
+-Processing data at scale and in paralle requires a cluster of machines.
+-Capacity can be expanded or reduced by adding or removing cluster nodes.
+-Individual nodes themselves need not be very sophistiated
+-Scaling is achieved horizontally
+
+* Storage :
+-Spark is not constrained by a dependency on HDFS
+-Supported storage systems include Apache Cassandra , Amazon S3,Kudu
+-During development and testing the local file system can be used.
+
+
+
+*Spark Cluster Manager option:
+-Spark standalone
+-Hadoop YARM
+-Apache Mesos
+-Kubernetes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

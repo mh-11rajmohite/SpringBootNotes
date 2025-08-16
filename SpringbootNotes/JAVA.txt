@@ -1,0 +1,361 @@
+JAVA (by Sun MicorSystem System/ Now Oracle)
+
+Developers - James Gosling,Chris Wirth,Pratrick Naughton
+
+Editions:
+1. J2SE - Java 2 Standard Edit - system/network oriented projects
+2. J2EE - Java 2 Enterprise Editn. - web oriented app.
+3. J2ME - Java 2 Mobile/Micro Editn - mobile based app.
+
+Versions : 
+JDK1.0 - Oak
+JDK2.0 - Playground
+JDK3.0 - Kestrel
+JDK4.0 - Mustang
+JDK5.0 - Tiger
+JDK7.0 -Dolphin
+JDK8.0 - Spyder
+Beyound 9 - OpenJKD
+
+
+Fully OOP - Scalar
+
+
+C							Java
+1.Procedural lang				1.Paratially OOPS
+2.Header files					2.No header / Contain Packages
+3. 32 keywords					3.51 keywords				
+4.Pointers 					4.No Pointers
+
+
+C++							JAVA
+1.Partially OOP					1.Partially OOP
+2.function - exists independently		2.Method - esist inside class
+3.OOP(object,class,encaplusation,abstraction,inheritance,polymorphism
+
+
+
+
+
+
+
+Literals : 
+
+a. Numeric literal : 
+	1. Decimal : base 10
+		eg. int a = 34.
+	
+	2. Octal literal : base 8 
+		eg. int a = 01		//1
+		    int b = 02 		//2
+		    and 03,04,05,06,07
+
+		eg. int c = 010 	//8
+			0*8^0 = 0
+			1*8^1 = 8
+			0*8^2 = 0
+
+		eg. int d = 011;  //9
+                        1*8^0=1
+                        1*8^1=8 
+                        0*8^2=0
+
+             	eg. int e = 012;  //10
+                        2*8^0=2 
+                        1*8^1=8 
+                        0*8^2=0
+	
+	3. Hexadecimal literal : base 16 
+
+		eg. int a = 0x16; 	//22
+			6*16^0 = 6
+			1*16^1 = 16 
+
+
+b. short literal:
+	short s1 = 10;  	//correct
+	short s2 = 10s;		//error
+	short s3 = 10S;		//error
+
+
+c. long literal :
+	long l1= 10; 		//correct
+	long l2 = 10l;		//correct
+	long l3 = 10L;
+
+d. float :
+	float f1 = 3.14		//erroe
+	float f2 = 3.14f	//correct
+	float f2 = 3.14F	//correct
+
+e.double 
+	double d1= 3.14;	//correct
+	double  d2 = 3.14d	//correct
+        double d3 = 3.14D 	//correct
+
+f. Boolean
+	boolean b1 =true	//correct
+	boolean b2 = false; 	//correct
+	boolean b3 = True; 	//incorrect
+
+g. char litreal:- single char single quotes
+
+char c1 = 'a';		//correct
+char c2 = "a";		//incorrect
+char c3 = 'ab';		//incorrect
+char c4 = "ab";		//incorrect
+char c5 = 23; 		//correct(print ascii value)
+char c6 = 12343		//correct
+char c7 = -45		//incorrect
+char c8 = (char)70000 	//correct
+
+In java , char can also be represnted as unicode presentation
+char c = '\u0000';
+
+
+
+h. String literal: sequence of char with double qoutes
+
+String s2 = "hello";
+
+i. null literal - can be declared only for object;
+	String s1 = null;
+
+
+5. Variables : 
+	-identifier used to store the value
+	-ex. int a = 10;
+
+Types:
+1. Instance/Class variable
+	-Any variable declared inside a class and outside the method
+	-No need to initialize instance variable;
+	-int,byte,short,long = 0
+	-float,double = 0.0
+	-boolean - false
+	-char - '\u0000'
+	-any object - null
+
+2. Local variable : 
+	-Any Variable that is declared inside the method
+	-Should be initialize
+
+
+
+
+6.Access specifiers : 
+Types: 
+1. public - global scope
+2.private - class scope
+3.protected - acccessed in class and inherited class
+4.defalut - accessed in class and package
+
+
+7.Type conversion- converting from one datatype to another datatype
+
+1.Implicit conversion - automatic conversion from lower to higher datatype
+	-int a = 10;
+	-double d = a;
+
+2. Explicit conversion - automatic conversion from higher to lower datatype
+	-int i 128;
+	-byte b = (byte) i;
+	-sop(b);		//-128(min. of byte)
+	
+	-int i 129;
+	-byte b = (byte) i;
+	-sop(b);		//-127(min. of byte)
+
+
+8. Operators:
+1. Arthimetic (+,-,/,*)
+2. Modulus (%)
+3.Relational (>,<,<=,>=)
+4.Assignment (=)
+5.Conditional Assignment(+=,-=,*=,/=)
+6.Equality(==,!=)
+7.Ternary(?:)
+8.Incement and decrement (++,--)
+9.Bistwise (&,|,^,~,>>,<<)
+10.Boolean logical  (&,|,!)
+11.Shortcircuit Logical (&&,||)
+12.new operator
+13.instance operator(instanceof)
+
+
+
+
+JDK - JRE + Extra tools need to develop java program
+
+JRE -  JVM and other software(standard libraries) used to execute java code
+JVM - Software that read and execute java byte code
+
+
+JTI - Present in JVM that converts java byte code into navite code
+
+
+Control Statement in Java:
+1. Conditional Statements : 
+	a.if / if-else /if-else-if/nested if 
+
+	b.switch case - check multiple condition 
+
+2.Looping Statement : 
+	a.for loop
+	
+	b.do while
+
+	c.while
+
+3.Flow breaking statement:
+	a.break - stop entire ittration
+	b.continue - stops the current iteration
+	c.return - transfer the call back to calling prg
+
+
+
+
+Array:- collection of data of similar datatype
+
+1. int a[] = {1,2,3}  		//correct
+2. int a[3] = {1,2,3} 		//error
+3. int a[] = new int[3];	//correct
+4. int[] a = new int[3];	//correct
+5. int a[] = new int[]{1,2,3};	//correct - Anonmyous array
+6. int a[] = new int[3]{1,2,3} 	//error
+7. int a[] = new int[-2] 	//correct - throws exception at runtime
+8 int a[] = new int[3];		//correct
+9. int a[] = {1,2,3}		//correct
+
+
+
+2D array:
+
+1. int a[][] = {{1,2},{3,4}}	//correct (2*2*4) bytes
+2. inr a[][] = new int[3][3]; 	//correct 36 bytes 
+3.int a[2][2] = {{1,2},{2,3}} 	//error
+4.int[][] a = new int[3][3]  	//correct
+5.int[] a[] = new int[5][6] 	//correct
+6 int a[][] = new int[5][6]	//corrct
+7.int a[][] = new int[5][]; 	//correct
+8.int a[][] = new int[][5];	//correct  
+
+
+Type of class :
+1. Main class : 
+	-Entry point of program, there will always be one main class
+	- If it  contains public static void main(String[] args)
+	- It is used to create an object for base class and finally we print the output
+
+
+2. Base class: 
+     - we have to write all ur logic inside base class, there may be multiple base class
+
+
+
+Constructor : 
+-Whenever we create an object for a class, memory will be allocated and allocation of memory is called constructor
+-Whenever we create an object for a class, the constructor will be invoked
+-It is used to initialize values to the variable at time of object creation
+-By default all class will contain one default constructor , i.e is constructor without any parameter, and
+and we can create our own constructor where ur class name and constructor name should be same, at that time 
+the already present default constructor will be overlap
+-Constructor can be created with or without parameters
+-Constructur can have access specifiers
+-Constructor should not have return type
+
+
+
+Nested class:
+
+-e.g. 
+class A{
+
+	class B{}		//Non-static class
+}
+
+class A{
+
+	static class B{}	//static class
+}
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+================
+Java 8 Features
+================
+
+1. Inteface : 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2. Lambda Expression : 
+- Introduced in Java 1.8v
+- Java is called as Object Oriented Programming Language. Everything is represented using Object and Classes
+-From Java 1.8 Functional Programming was introduced
+-Functional Programming means everything will be represented in the form of functions. Functions can exists outside the class. Functions can be stored into a reference variable . Functions can be passed as a parameter to other functions.
+
+-Lambda expression was introduced to enable Functional Programming
+
+What is lambda ?
+- Lambda is anonymous function with 
+	-no name
+	-no modifier
+	-no return type
+ex.
+public void m1(){
+
+	sysout("Hi")
+}
+
+lambda expression : 
+
+()->{sysout("HI")}
+()->sysout("hi")
+
+
+ex. public void add(int a,int b){
+
+	sysout("Addition is :" + (a+b) )
+}
+
+(int a, int b)->{
+
+	sysout("Additon is :" (a+b))
+}
+
+
+
+
+
+
+candidate.queries@accenture.com
+
+
+
+
+
+
+

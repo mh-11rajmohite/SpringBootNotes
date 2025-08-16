@@ -1,0 +1,4306 @@
+Day 19 
+kadam sir : 9881082204
+ 
+1. Write hibernate appl to insert Person details like id,name,salary, address into database
+
+ 
+
+ 
+
+ORM Framework
+
+    - Object Relational Mapping - used to persist the data into database
+
+ 
+
+JDBC - Java Database Connectivity
+
+EJB 2.x Entity bean - Failed in performance
+
+EJB 3.X - JPA - Java Persistence API
+
+ 
+
+JPA is a specification to persist the data into database and it uses some ORM concept
+
+It requires some implementation using ORM tools like Hibernate, iBatis, Toplink, JDO etc
+
+ 
+
+Object Relational Mapping(ORM) used to map POJO class(entity/persistent class) to the columns of database table
+
+ 
+
+1. open source and lightweight
+
+2. Database independent query
+
+        JPAQL(Java Persistent Query Language) - query the entity class
+
+        SQL - query the table directly
+
+3. Automatic table creation
+
+4. Fast performance - uses cache framework
+
+5. Simplifies complex join
+
+6. Hibernate will automatically generate the queries
+
+ 
+
+1. Configure database info and hibernate properties
+
+ 
+
+<!--Database info--!>
+
+<property name="connection.url">jdbc:mysql://localhost:3306/jpa</property>
+
+<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+
+<property name="connection.username">root</property>
+
+<property name="connection.password">root</property>
+
+ 
+
+<!--Hibernate properties --!>
+
+<property name="hbm2ddl.auto">create/update/create-drop/validate</property> - will automatically create the table - 4 values
+
+  1. create  - each time it will create new table
+
+  2. update - it will create table for first time, and next time it will update the table(ie) append the data
+
+  3. create-drop - it drop the entire db and create a new table
+
+  4. validate - it dosent do anything but it just validate the existing table
+
+ 
+
+<property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+
+    - we can communicate with db using queries or using predefined methods
+
+    - we wont write any sql queries, instead we use some predefined methods to processing in the database, so hibernate internally will generate sql queries related to that particular method based on particular database
+
+<property name="show_sql">true</property>
+
+     - used to display generated sql query in console in single line
+
+<property name="format_sql">true</property>
+
+     - used to format and display generated sql query in console
+
+<property name="use_sql_comments">true</property>
+
+     - used to define comments for the generated sql query in console
+
+ 
+
+JPA - Java Persistence API
+
+    - It is a specification in Java used to persist data between java object and relational db
+
+    - collection of classes and interface to store data into database
+
+    - present in javax.persistence.*
+
+ 
+
+Entity/persistent class(user defined class) - persistent object that is stored inside db - POJO class
+
+   
+
+1. EntityManagerFactory interface - used to create EntityManager
+
+      - EntityManager createEntityManager()
+
+2. EntityManager interface - core interface used to persist the data into db - acts as interface between appl and database
+
+     - void persist(Object o) - insert the data into db if primary key does not exists, if primary key exists it perform update operation - generate insert query
+
+     - Object find(Serializable s, Object key) - select the data from db - generate select query
+
+     - void remove(Object o) - delete data from db - generate delete query
+
+     - void close()
+
+     - boolean contains(Object o)
+
+     - Query createQuery(String query)
+
+     - Query createNamedQuery(String query)
+
+     - Query createNativeQuery(String query)
+
+     - CriteriaBuilder getCriteriaBuilder()
+
+     - EntityTransaction getTransaction() - create a transaction
+
+3. EntityTransaction interface - used to maintain transaction - commit(), rollback()
+
+4. Query interface - used to write database independent query
+
+ 
+
+ 
+
+1. Create maven project with 2 dependency(hibernate, mysql db)
+
+ 
+
+<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+
+<dependency>
+
+    <groupId>org.hibernate</groupId>
+
+    <artifactId>hibernate-core</artifactId>
+
+    <version>5.4.24.Final</version>
+
+</dependency>
+
+<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+
+<dependency>
+
+    <groupId>mysql</groupId>
+
+    <artifactId>mysql-connector-java</artifactId>
+
+    <version>8.0.19</version>
+
+</dependency>
+
+ 
+
+2. Configure db info in persistence.xml inside resources/META-INF
+
+ 
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<persistence xmlns=http://java.sun.com/xml/ns/persistence version="2.0">
+
+    <persistence-unit name="student_pu" transaction-type="RESOURCE_LOCAL">
+
+         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>  
+
+         <class>com.pack.Student</class>    
+
+         <properties>
+
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/prejoiners"/>
+
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+
+            <property name="javax.persistence.jdbc.user" value="root"/>
+
+            <property name="javax.persistence.jdbc.password" value="root"/>
+
+           
+
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
+
+            <property name="hibernate.show_sql" value="true"/>
+
+            <property name="hibernate.format_sql" value="true"/>
+
+            <property name="hibernate.use_sql_comments" value="true"/>
+
+         </properties>  
+
+    </persistence-unit>
+
+</persistence>
+
+ 
+
+ 
+
+3. Create Entity class using JPA - simple pojo - use jpa concept
+
+ 
+
+ 
+
+import javax.persistence.*;
+
+ 
+
+@Entity - indicate it is entity class which will store in db
+
+@Table(name="stud100") - Optional - used to map the entity class with table, if not given then it create table in name of entity class
+
+public class Student {
+
+     @Id - indicates it is a primary key
+
+     @GeneratedValue(strategy=GenerationType.AUTO/IDENTITY/SEQUENCE/TABLE) - To indicate primary key value to be autogenerated, if we not provided @GeneratedValue we have to provide value for primary key
+
+     @Column(name="studid",length=20,nullable="true/false",unique="true/false",insertable="true/false",updatable="true/false",scale="7",precision="2")
+
+     private Integer id;
+
+ 
+
+     @Column(name="stuname")
+
+     private String name;
+
+ 
+
+     private Integer age;
+
+ 
+
+     @Temporal(TemporalType.DATE/TIME/TIMESTAMP) - used to map java date field to sql date field
+
+     private Date dob;
+
+    
+
+     //private String gender;
+
+     @Enumerated(EnumType.ORDINAL(0,1)/STRING(MALE,FEMALE)) - used to map enum field to table
+
+     private Gender gender;  //here gender is enum
+
+ 
+
+     @Lob - used to map large objects to table
+
+     @Column(name="photo",ColumnDefination="BLOB")
+
+     private byte[] myImage;
+
+ 
+
+     @Transient - used to ignore this field at time of persisting
+
+     private boolean status;
+
+     //getters and setters
+
+}
+
+ 
+
+@Column(name="sal",scale="7",precision="2")
+
+private Double salary; //20000.50
+
+ 
+
+ 
+
+enum Gender { MALE, FEMALE}
+
+ 
+
+@Entity
+
+@Table(name="stud100")
+
+public class Student {
+
+              @Id
+
+              @GeneratedValue(strategy=GenerationType.AUTO)
+
+              @Column(name="stuid")
+
+    private Integer id;
+
+              @Column(name="stuname")
+
+    private String name;
+
+    private Integer age;
+
+    @Temporal(TemporalType.DATE)
+
+    private Date dob;
+
+    @Enumerated(EnumType.ORDINAL)
+
+    private Gender gender;
+
+    @Transient
+
+    private boolean status;
+
+   
+
+    //getters, setters,constructors
+
+ 
+
+}
+
+ 
+
+4. Configure entity class in persistence.xml
+
+ 
+
+<class>com.pack.Student</class>
+
+ 
+
+5. Create main class
+
+ 
+
+1. Create EntityManagerFactory - get all db info from persistence.xml
+
+2. Create EntityManager
+
+3. Create EntityTransaction
+
+ 
+
+@DynamicInsert - if we want to generate sql queries only for the column u r inserting
+
+@DynamicUpdate - if we want to generate sql queries only for the column u r updating
+
+ 
+
+public class Main {
+
+              public static void main(String[] args) {
+
+             
+
+                             EntityManagerFactory emf=Persistence.createEntityManagerFactory("student_pu");
+
+                             EntityManager em=emf.createEntityManager();
+
+                             EntityTransaction et=em.getTransaction();
+
+                             et.begin();
+
+                             /*Student st1=new Student("Tim",23,LocalDate.parse("2000-10-23"),Gender.MALE);
+
+                             em.persist(st1);*/
+
+                            
+
+                             /*Student st=(Student)em.find(Student.class, 5);
+
+                             st.setGender(Gender.FEMALE);
+
+                             em.persist(st);*/
+
+                            
+
+                             /*Student st=(Student)em.find(Student.class, 5);
+
+                             em.remove(st);*/
+
+                            
+
+                             /*Student st=new Student();
+
+                             st.setName("Amy");
+
+                             st.setAge(23);
+
+                             st.setDob(LocalDate.parse("1990-02-23"));
+
+                             st.setGender(Gender.FEMALE);
+
+                             em.persist(st);*/
+
+                            
+
+                             /*Student st=new Student();
+
+                             st.setName("July");
+
+                             st.setDob(LocalDate.parse("1993-02-23"));
+
+                             st.setGender(Gender.FEMALE);
+
+                             em.persist(st);*/
+
+                            
+
+                             Student st=(Student)em.find(Student.class, 8);
+
+                             st.setAge(28);
+
+                             em.persist(st);
+
+                             et.commit();
+
+                             System.out.println("Success");
+
+                             em.close();
+
+                             emf.close();
+              }
+
+}
+ 
+
+1.           Create a appl with Employee entity class with id, name, age, gender, department and salary and insert some dummy values in to the table
+
+2.           Use JPAQL,  Get the details of youngest male employee in the product development department?
+
+3.           Using JPAQL, What is the average age of male employees?
+
+ 
+
+ 
+
+ 
+
+JPA Relationship
+
+    - used to establish the relationship between entities
+
+ 
+
+1. One to One
+
+      - one user has only one vehicle
+
+      - We are going to create object of Vehicle class in user class
+
+ 
+
+user                                              Vehicle
+
+userid(pk)   name  vehicle_id(fk)            vehicle_id(pk)    vehicle_name
+
+ 
+
+1. Configure db info in persistence.xml
+
+ 
+
+2. Create Vehicle entity class
+
+ 
+
+@Entity
+
+@Table(name="veh100")
+
+public class Vehicle {
+
+              @Id
+
+              @GeneratedValue(strategy=GenerationType.AUTO)
+
+              @Column(name="vehicle_id")
+
+    private Integer id;
+
+              @Column(name="vehicle_name")
+
+    private String name;
+
+              public Vehicle(Integer id, String name) {
+
+                             super();
+
+                             this.id = id;
+
+                             this.name = name;
+
+              }
+
+              public Integer getId() {
+
+                             return id;
+
+              }
+
+              public void setId(Integer id) {
+
+                             this.id = id;
+
+              }
+
+              public String getName() {
+
+                             return name;
+
+              }
+
+              public void setName(String name) {
+
+                             this.name = name;
+
+              }
+
+              public Vehicle() {
+
+                             super();
+
+                             // TODO Auto-generated constructor stub
+
+              }
+
+             
+
+             
+
+}
+
+ 
+
+3. Create User entity class
+
+ 
+
+@Entity
+
+@Table(name="user100")
+
+public class User {
+
+   @Id
+
+   @GeneratedValue(strategy=GenerationType.AUTO)
+
+   @Column(name="user_id")
+
+   private Integer id;
+
+   @Column(name="user_name")
+
+   private String name;
+
+  
+
+   @OneToOne
+
+   @JoinColumn(name="vehicle_id")
+
+   private Vehicle vehicle;   //one user has one vehicle
+
+ 
+
+public Integer getId() {
+
+              return id;
+
+}
+
+ 
+
+public void setId(Integer id) {
+
+              this.id = id;
+
+}
+
+ 
+
+public String getName() {
+
+              return name;
+
+}
+
+ 
+
+public void setName(String name) {
+
+              this.name = name;
+
+}
+
+ 
+
+public Vehicle getVehicle() {
+
+              return vehicle;
+
+}
+
+ 
+
+public void setVehicle(Vehicle vehicle) {
+
+              this.vehicle = vehicle;
+
+}
+
+ 
+
+public User(Integer id, String name, Vehicle vehicle) {
+
+              super();
+
+              this.id = id;
+
+              this.name = name;
+
+              this.vehicle = vehicle;
+
+}
+
+ 
+
+public User() {
+
+              super();
+
+              // TODO Auto-generated constructor stub
+
+}
+
+  
+
+   
+
+}
+
+ 
+
+4. Configure entity class in persistence.xml
+
+ 
+
+<class>com.pack.User</class> 
+
+         <class>com.pack.Vehicle</class>
+
+ 
+
+Cascading operation
+
+    - used in mapping concept, if we perform operation on one entity class it should be automatically affect the another entity class - 4 types
+
+1. CascadeType.ALL
+
+2. CascadeType.PERSIST
+
+3. CascadeType.UPDATE
+
+4. CascadeType.REMOVE
+
+ 
+
+5. Create main class
+
+ 
+
+public class Main1 {
+
+ 
+
+              public static void main(String[] args) {
+
+                             EntityManagerFactory emf=Persistence.createEntityManagerFactory("student_pu");
+
+                             EntityManager em=emf.createEntityManager();
+
+                             EntityTransaction et=em.getTransaction();
+
+                             et.begin();
+
+                            
+
+                             Vehicle v1=new Vehicle();
+
+                             v1.setName("Honda");
+
+                             Vehicle v2=new Vehicle();
+
+                             v2.setName("Audi");
+
+                            
+
+                             User u1=new User();
+
+                             u1.setName("Ram");
+
+                             u1.setVehicle(v1);
+
+                             User u2=new User();
+
+                             u2.setName("Raj");
+
+                             u2.setVehicle(v2);
+
+                            
+
+                             //em.persist(v1);
+
+                             //em.persist(v2);
+
+                             em.persist(u1);
+
+                             em.persist(u2);
+
+                             et.commit();
+
+                             System.out.println("Success");
+
+                             em.close();
+
+                             emf.close();
+
+              }
+
+ 
+
+}
+
+ 
+
+ 
+
+mysql> select * from veh100;
+
++------------+--------------+
+
+| vehicle_id | vehicle_name |
+
++------------+--------------+
+
+|         10 | Honda        |
+
+|         12 | Audi         |
+
++------------+--------------+
+
+2 rows in set (0.01 sec)
+
+ 
+
+mysql> select * from user100;
+
++---------+-----------+------------+
+
+| user_id | user_name | vehicle_id |
+
++---------+-----------+------------+
+
+|       9 | Ram       |         10 |
+
+|      11 | Raj       |         12 |
+
++---------+-----------+------------+
+
+2 rows in set (0.00 sec)
+
+ 
+
+2. One to many
+
+     - one user has many vehicle, in this case it create a separate join table
+
+ 
+
+user                                              Vehicle
+
+userid(pk)   name                     vehicle_id(pk)    vehicle_name
+
+ 
+
+user_vehicle
+
+user_id    vehicle_id
+
+ 
+
+1. Create Vehicle1 entity class
+
+ 
+
+@Entity
+
+@Table(name="veh101")
+
+public class Vehicle1 {
+
+              @Id
+
+              @GeneratedValue(strategy=GenerationType.AUTO)
+
+              @Column(name="vehicle_id")
+
+    private Integer id;
+
+              @Column(name="vehicle_name")
+
+    private String name;
+
+              public Vehicle1(Integer id, String name) {
+
+                             super();
+
+                             this.id = id;
+
+                             this.name = name;
+
+              }
+
+              public Integer getId() {
+
+                             return id;
+
+              }
+
+              public void setId(Integer id) {
+
+                             this.id = id;
+
+              }
+
+              public String getName() {
+
+                             return name;
+
+              }
+
+              public void setName(String name) {
+
+                             this.name = name;
+
+              }
+
+              public Vehicle1() {
+
+                             super();
+
+                             // TODO Auto-generated constructor stub
+
+              }
+
+             
+
+             
+
+}
+
+ 
+
+ 
+
+2. Create User1 entity class
+
+ 
+
+@Entity
+
+@Table(name="user101")
+
+public class User1 {
+
+   @Id
+
+   @GeneratedValue(strategy=GenerationType.AUTO)
+
+   @Column(name="user_id")
+
+   private Integer id;
+
+   @Column(name="user_name")
+
+   private String name;
+
+  
+
+   //@OneToMany(targetEntity = Vehicle1.class, cascade = CascadeType.ALL)
+
+   @OneToMany(cascade=CascadeType.ALL)
+
+   @JoinTable(name="user_vehicle", joinColumns = @JoinColumn(name="user_id"), inverseJoinColumns = @JoinColumn(name="vehicle_id"))
+
+   private List<Vehicle1> vehicle1=new ArrayList<>();
+
+ 
+
+public Integer getId() {
+
+              return id;
+
+}
+
+ 
+
+public void setId(Integer id) {
+
+              this.id = id;
+
+}
+
+ 
+
+public String getName() {
+
+              return name;
+
+}
+
+ 
+
+public void setName(String name) {
+
+              this.name = name;
+
+}
+
+ 
+
+public List<Vehicle1> getVehicle1() {
+
+              return vehicle1;
+
+}
+
+ 
+
+public void setVehicle1(List<Vehicle1> vehicle1) {
+
+              this.vehicle1 = vehicle1;
+
+}
+
+ 
+
+public User1(Integer id, String name, List<Vehicle1> vehicle1) {
+
+              super();
+
+              this.id = id;
+
+              this.name = name;
+
+              this.vehicle1 = vehicle1;
+
+}
+
+ 
+
+public User1() {
+
+              super();
+
+              // TODO Auto-generated constructor stub
+
+}
+
+}
+
+ 
+
+3. Configure entity class in persistence.xml
+
+ 
+
+<class>com.pack.User1</class> 
+
+         <class>com.pack.Vehicle1</class>
+
+ 
+
+4. Create main class
+
+ 
+
+public class Main1 {
+
+ 
+
+              public static void main(String[] args) {
+
+                             EntityManagerFactory emf=Persistence.createEntityManagerFactory("student_pu");
+
+                             EntityManager em=emf.createEntityManager();
+
+                             EntityTransaction et=em.getTransaction();
+
+                             et.begin();
+
+                            
+
+                             Vehicle1 v1=new Vehicle1();
+
+                             v1.setName("BMW");
+
+                             Vehicle1 v2=new Vehicle1();
+
+                             v2.setName("Benz");
+
+                            
+
+                  List<Vehicle1> list=new ArrayList<>();
+
+                  list.add(v1);
+
+                  list.add(v2);
+
+                            
+
+                             User1 u1=new User1();
+
+                             u1.setName("Ramu");
+
+                             u1.setVehicle1(list);
+
+                            
+
+                             em.persist(u1);
+
+                            
+
+                             et.commit();
+
+                             System.out.println("Success");
+
+                             em.close();
+
+                             emf.close();
+
+              }
+
+ 
+
+}
+
+ 
+
+ 
+
+mysql> select * from user101;
+
++---------+-----------+
+
+| user_id | user_name |
+
++---------+-----------+
+
+|      13 | Ramu      |
+
++---------+-----------+
+
+1 row in set (0.00 sec)
+
+ 
+
+mysql> select * from veh101;
+
++------------+--------------+
+
+| vehicle_id | vehicle_name |
+
++------------+--------------+
+
+|         14 | BMW          |
+
+|         15 | Benz         |
+
++------------+--------------+
+
+2 rows in set (0.01 sec)
+
+ 
+
+mysql> select * from user101_veh101;
+
++---------------+---------------------+
+
+| User1_user_id | vehicle1_vehicle_id |
+
++---------------+---------------------+
+
+|            13 |                  14 |
+
+|            13 |                  15 |
+
++---------------+---------------------+
+
+2 rows in set (0.01 sec)
+
+ 
+
+3. Many to one
+
+      - many user will have one vehicle
+
+ 
+
+4. Many to many
+
+      - many user will have many vehicle
+
+ 
+
+1. Create Vehicle2 entity class
+
+ 
+
+@Entity
+
+@Table(name="veh102")
+
+public class Vehicle2 {
+
+              @Id
+
+              @GeneratedValue(strategy=GenerationType.AUTO)
+
+              @Column(name="vehicle_id")
+
+    private Integer id;
+
+              @Column(name="vehicle_name")
+
+    private String name;
+
+             
+
+              @ManyToMany(targetEntity=User2.class)
+
+              private List<User2> user=new ArrayList<>();
+
+ 
+
+              public Integer getId() {
+
+                             return id;
+
+              }
+
+ 
+
+              public void setId(Integer id) {
+
+                             this.id = id;
+
+              }
+
+ 
+
+              public String getName() {
+
+                             return name;
+
+              }
+
+ 
+
+              public void setName(String name) {
+
+                             this.name = name;
+
+              }
+
+ 
+
+              public List<User2> getUser() {
+
+                             return user;
+
+              }
+
+ 
+
+              public void setUser(List<User2> user) {
+
+                             this.user = user;
+
+              }
+
+ 
+
+              public Vehicle2(Integer id, String name, List<User2> user) {
+
+                             super();
+
+                             this.id = id;
+
+                             this.name = name;
+
+                             this.user = user;
+
+              }
+
+ 
+
+              public Vehicle2() {
+
+                             super();
+
+                             // TODO Auto-generated constructor stub
+
+              }
+
+             
+
+             
+
+}
+
+ 
+
+ 
+
+ 
+
+2. Craete User2 entity class
+
+ 
+
+@Entity
+
+@Table(name="user102")
+
+public class User2 {
+
+   @Id
+
+   @GeneratedValue(strategy=GenerationType.AUTO)
+
+   @Column(name="user_id")
+
+   private Integer id;
+
+   @Column(name="user_name")
+
+   private String name;
+
+  
+
+   @ManyToMany(targetEntity = Vehicle2.class, cascade=CascadeType.ALL)
+
+   private List<Vehicle2> vehicle=new ArrayList<>();
+
+ 
+
+public Integer getId() {
+
+              return id;
+
+}
+
+ 
+
+public void setId(Integer id) {
+
+              this.id = id;
+
+}
+
+ 
+
+public String getName() {
+
+              return name;
+
+}
+
+ 
+
+public void setName(String name) {
+
+              this.name = name;
+
+}
+
+ 
+
+public List<Vehicle2> getVehicle() {
+
+              return vehicle;
+
+}
+
+ 
+
+public void setVehicle(List<Vehicle2> vehicle) {
+
+              this.vehicle = vehicle;
+
+}
+
+ 
+
+public User2(Integer id, String name, List<Vehicle2> vehicle) {
+
+              super();
+
+              this.id = id;
+
+              this.name = name;
+
+              this.vehicle = vehicle;
+
+}
+
+ 
+
+public User2() {
+
+              super();
+
+              // TODO Auto-generated constructor stub
+
+}
+
+  }
+
+ 
+
+3. Configure entity class in xml file
+
+<class>com.pack.User2</class> 
+
+         <class>com.pack.Vehicle2</class>
+
+ 
+
+4. Create main class
+
+ 
+
+public class Main1 {
+
+ 
+
+              public static void main(String[] args) {
+
+                             EntityManagerFactory emf=Persistence.createEntityManagerFactory("student_pu");
+
+                             EntityManager em=emf.createEntityManager();
+
+                             EntityTransaction et=em.getTransaction();
+
+                             et.begin();
+
+                            
+
+                             Vehicle2 v1=new Vehicle2();
+
+                             v1.setName("Duster");
+
+                             Vehicle2 v2=new Vehicle2();
+
+                             v2.setName("Ford");
+
+                            
+
+                  List<Vehicle2> list1=new ArrayList<>();
+
+                  list1.add(v1);
+
+                  list1.add(v2);
+
+                 
+
+                  List<Vehicle2> list2=new ArrayList<>();
+
+                  list2.add(v1);
+
+                  list2.add(v2);
+
+                            
+
+                             User2 u1=new User2();
+
+                             u1.setName("Amy");
+
+                             u1.setVehicle(list1);
+
+                            
+
+                             User2 u2=new User2();
+
+                             u2.setName("Jack");
+
+                             u2.setVehicle(list2);
+
+                            
+
+                             em.persist(u1);
+
+                             em.persist(u2);
+
+                            
+
+                             et.commit();
+
+                             System.out.println("Success");
+
+                             em.close();
+
+                             emf.close();
+
+              }
+
+ 
+
+}
+
+ 
+
+JPA Inheritance
+
+     - entity class can also be inherited - 3 types
+
+ 
+
+1. Single Table/Table per class inheritance
+
+        - For all entity class it will create a common single table
+
+ 
+
+@DiscriminatorColumn - used to differentiate the type of employee
+
+@DiscriminatorValue - used to provide value for that column
+
+ 
+
+@Entity
+
+@Table(name="emp100")
+
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+
+@DiscriminatorColumn(name="empType", discriminatorType = DiscriminatorType.STRING)
+
+@DiscriminatorValue(value="employee")
+
+public class Employee {
+
+   @Id
+
+   private Integer id;
+
+   private String name;
+
+public Integer getId() {
+
+              return id;
+
+}
+
+public void setId(Integer id) {
+
+              this.id = id;
+
+}
+
+public String getName() {
+
+              return name;
+
+}
+
+public void setName(String name) {
+
+              this.name = name;
+
+}
+
+public Employee(Integer id, String name) {
+
+              super();
+
+              this.id = id;
+
+              this.name = name;
+
+}
+
+public Employee() {
+
+              super();
+
+              // TODO Auto-generated constructor stub
+
+}
+
+  
+
+   
+
+}
+
+ 
+
+@Entity
+
+@DiscriminatorValue(value="reg_employee")
+
+public class RegularEmployee extends Employee{
+
+   private Double salary;
+
+   private Double bonus;
+
+public Double getSalary() {
+
+              return salary;
+
+}
+
+public void setSalary(Double salary) {
+
+              this.salary = salary;
+
+}
+
+public Double getBonus() {
+
+              return bonus;
+
+}
+
+public void setBonus(Double bonus) {
+
+              this.bonus = bonus;
+
+}
+
+public RegularEmployee(Double salary, Double bonus) {
+
+              super();
+
+              this.salary = salary;
+
+              this.bonus = bonus;
+
+}
+
+public RegularEmployee() {
+
+              super();
+
+              // TODO Auto-generated constructor stub
+
+}
+
+  
+
+}
+
+ 
+
+@Entity
+
+@DiscriminatorValue(value="cont_employee")
+
+public class ContractEmployee extends Employee{
+
+    private Double payPerHour;
+
+    private Integer duration;
+
+              public Double getPayPerHour() {
+
+                             return payPerHour;
+
+              }
+
+              public void setPayPerHour(Double payPerHour) {
+
+                             this.payPerHour = payPerHour;
+
+              }
+
+              public Integer getDuration() {
+
+                             return duration;
+
+              }
+
+              public void setDuration(Integer duration) {
+
+                             this.duration = duration;
+
+              }
+
+              public ContractEmployee(Double payPerHour, Integer duration) {
+
+                             super();
+
+                             this.payPerHour = payPerHour;
+
+                             this.duration = duration;
+
+              }
+
+              public ContractEmployee() {
+
+                             super();
+
+                             // TODO Auto-generated constructor stub
+
+              }
+
+   
+
+}
+
+ 
+
+2. Create main class
+
+ 
+
+public class Main1 {
+
+ 
+
+              public static void main(String[] args) {
+
+                             EntityManagerFactory emf=Persistence.createEntityManagerFactory("student_pu");
+
+                             EntityManager em=emf.createEntityManager();
+
+                             EntityTransaction et=em.getTransaction();
+
+                             et.begin();
+
+                            
+
+                             Employee e1=new Employee();
+
+                             e1.setId(100);
+
+                             e1.setName("Ram");
+
+                            
+
+                             RegularEmployee r1=new RegularEmployee();
+
+                             r1.setId(101);
+
+                             r1.setName("Sam");
+
+                             r1.setSalary(20000.0);
+
+                             r1.setBonus(2000.0);
+
+                            
+
+                             ContractEmployee c1=new ContractEmployee();
+
+                             c1.setId(102);
+
+                             c1.setName("Jam");
+
+                             c1.setPayPerHour(200.0);
+
+                             c1.setDuration(2);
+
+                            
+
+                             em.persist(e1);
+
+                             em.persist(r1);
+
+                             em.persist(c1);
+
+                             et.commit();
+
+                             System.out.println("Success");
+
+                             em.close();
+
+                             emf.close();
+
+              }
+
+ 
+
+}
+
+ 
+
+ 
+
+mysql> select * from emp100;
+
++---------------+-----+------+-------+--------+----------+------------+
+
+| empType       | id  | name | bonus | salary | duration | payPerHour |
+
++---------------+-----+------+-------+--------+----------+------------+
+
+| employee      | 100 | Ram  |  NULL |   NULL |     NULL |       NULL |
+
+| reg_employee  | 101 | Sam  |  2000 |  20000 |     NULL |       NULL |
+
+| cont_employee | 102 | Jam  |  NULL |   NULL |        2 |        200 |
+
++---------------+-----+------+-------+--------+----------+------------+
+
+3 rows in set (0.00 sec)
+
+ 
+
+2. Table per concrete class inheritance
+
+         - For each entity class it creates separate table
+
+ 
+
+@Entity
+
+@Table(name="emp101")
+
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+
+public class Employee {
+
+   @Id
+
+   private Integer id;
+
+   private String name;
+
+public Integer getId() {
+
+              return id;
+
+}
+
+public void setId(Integer id) {
+
+              this.id = id;
+
+}
+
+public String getName() {
+
+              return name;
+
+}
+
+public void setName(String name) {
+
+              this.name = name;
+
+}
+
+public Employee(Integer id, String name) {
+
+              super();
+
+              this.id = id;
+
+              this.name = name;
+
+}
+
+public Employee() {
+
+              super();
+
+              // TODO Auto-generated constructor stub
+
+}
+
+  
+
+   
+
+}
+
+ 
+
+ 
+
+@Entity
+
+@Table(name="regemp101")
+
+@AttributeOverrides({
+
+              @AttributeOverride(name="id",column=@Column(name="id")),
+
+       @AttributeOverride(name="name",column=@Column(name="name")),
+
+})
+
+public class RegularEmployee extends Employee{
+
+   private Double salary;
+
+   private Double bonus;
+
+public Double getSalary() {
+
+              return salary;
+
+}
+
+public void setSalary(Double salary) {
+
+              this.salary = salary;
+
+}
+
+public Double getBonus() {
+
+              return bonus;
+
+}
+
+public void setBonus(Double bonus) {
+
+              this.bonus = bonus;
+
+}
+
+public RegularEmployee(Double salary, Double bonus) {
+
+              super();
+
+              this.salary = salary;
+
+              this.bonus = bonus;
+
+}
+
+public RegularEmployee() {
+
+              super();
+
+              // TODO Auto-generated constructor stub
+
+}
+
+  
+
+}
+
+ 
+
+@Entity
+
+@Table(name="contemp101")
+
+@AttributeOverrides({
+
+              @AttributeOverride(name="id",column=@Column(name="id")),
+
+       @AttributeOverride(name="name",column=@Column(name="name")),
+
+})
+
+public class ContractEmployee extends Employee{
+
+    private Double payPerHour;
+
+    private Integer duration;
+
+              public Double getPayPerHour() {
+
+                             return payPerHour;
+
+              }
+
+              public void setPayPerHour(Double payPerHour) {
+
+                             this.payPerHour = payPerHour;
+
+              }
+
+              public Integer getDuration() {
+
+                             return duration;
+
+              }
+
+              public void setDuration(Integer duration) {
+
+                             this.duration = duration;
+
+              }
+
+              public ContractEmployee(Double payPerHour, Integer duration) {
+
+                             super();
+
+                             this.payPerHour = payPerHour;
+
+                             this.duration = duration;
+
+              }
+
+              public ContractEmployee() {
+
+                             super();
+
+                             // TODO Auto-generated constructor stub
+
+              }
+
+   
+
+}
+
+ 
+
+public class Main1 {
+
+ 
+
+              public static void main(String[] args) {
+
+                             EntityManagerFactory emf=Persistence.createEntityManagerFactory("student_pu");
+
+                             EntityManager em=emf.createEntityManager();
+
+                             EntityTransaction et=em.getTransaction();
+
+                             et.begin();
+
+                            
+
+                             Employee e1=new Employee();
+
+                             e1.setId(100);
+
+                             e1.setName("Ram");
+
+                            
+
+                             RegularEmployee r1=new RegularEmployee();
+
+                             r1.setId(101);
+
+                             r1.setName("Sam");
+
+                             r1.setSalary(20000.0);
+
+                             r1.setBonus(2000.0);
+
+                            
+
+                             ContractEmployee c1=new ContractEmployee();
+
+                             c1.setId(102);
+
+                             c1.setName("Jam");
+
+                             c1.setPayPerHour(200.0);
+
+                             c1.setDuration(2);
+
+                            
+
+                             em.persist(e1);
+
+                             em.persist(r1);
+
+                             em.persist(c1);
+
+                             et.commit();
+
+                             System.out.println("Success");
+
+                             em.close();
+
+                             emf.close();
+
+              }
+
+ 
+
+}
+
+ 
+
+ 
+
+mysql> select * from emp101;
+
++-----+------+
+
+| id  | name |
+
++-----+------+
+
+| 100 | Ram  |
+
++-----+------+
+
+1 row in set (0.00 sec)
+
+ 
+
+mysql> select * from regemp101;
+
++-----+------+-------+--------+
+
+| id  | name | bonus | salary |
+
++-----+------+-------+--------+
+
+| 101 | Sam  |  2000 |  20000 |
+
++-----+------+-------+--------+
+
+1 row in set (0.01 sec)
+
+ 
+
+mysql> select * from contemp101;
+
++-----+------+----------+------------+
+
+| id  | name | duration | payPerHour |
+
++-----+------+----------+------------+
+
+| 102 | Jam  |        2 |        200 |
+
++-----+------+----------+------------+
+
+1 row in set (0.01 sec)
+
+ 
+
+3. Joined/Table per subclass inheritance
+
+      - used to join the table based on primary key and foreign key relationship
+
+ 
+
+@Entity
+
+@Table(name="emp102")
+
+@Inheritance(strategy=InheritanceType.JOINED)
+
+public class Employee {
+
+   @Id
+
+   private Integer id;
+
+   private String name;
+
+public Integer getId() {
+
+              return id;
+
+}
+
+public void setId(Integer id) {
+
+              this.id = id;
+
+}
+
+public String getName() {
+
+              return name;
+
+}
+
+public void setName(String name) {
+
+              this.name = name;
+
+}
+
+public Employee(Integer id, String name) {
+
+              super();
+
+              this.id = id;
+
+              this.name = name;
+
+}
+
+public Employee() {
+
+              super();
+
+              // TODO Auto-generated constructor stub
+
+}
+
+  
+
+   
+
+}
+
+ 
+
+ 
+
+@Entity
+
+@Table(name="regemp102")
+
+@PrimaryKeyJoinColumn(name="id")
+
+public class RegularEmployee extends Employee{
+
+   private Double salary;
+
+   private Double bonus;
+
+public Double getSalary() {
+
+              return salary;
+
+}
+
+public void setSalary(Double salary) {
+
+              this.salary = salary;
+
+}
+
+public Double getBonus() {
+
+              return bonus;
+
+}
+
+public void setBonus(Double bonus) {
+
+              this.bonus = bonus;
+
+}
+
+public RegularEmployee(Double salary, Double bonus) {
+
+              super();
+
+              this.salary = salary;
+
+              this.bonus = bonus;
+
+}
+
+public RegularEmployee() {
+
+              super();
+
+              // TODO Auto-generated constructor stub
+
+}
+
+  
+
+}
+
+ 
+
+ 
+
+@Entity
+
+@Table(name="contemp102")
+
+@PrimaryKeyJoinColumn(name="id")
+
+public class ContractEmployee extends Employee{
+
+    private Double payPerHour;
+
+    private Integer duration;
+
+              public Double getPayPerHour() {
+
+                             return payPerHour;
+
+              }
+
+              public void setPayPerHour(Double payPerHour) {
+
+                             this.payPerHour = payPerHour;
+
+              }
+
+              public Integer getDuration() {
+
+                             return duration;
+
+              }
+
+              public void setDuration(Integer duration) {
+
+                             this.duration = duration;
+
+              }
+
+              public ContractEmployee(Double payPerHour, Integer duration) {
+
+                             super();
+
+                             this.payPerHour = payPerHour;
+
+                             this.duration = duration;
+
+              }
+
+              public ContractEmployee() {
+
+                             super();
+
+                             // TODO Auto-generated constructor stub
+
+              }
+
+   
+
+}
+
+ 
+
+ 
+
+mysql> select * from emp102;
+
++-----+------+
+
+| id  | name |
+
++-----+------+
+
+| 100 | Ram  |
+
+| 101 | Sam  |
+
+| 102 | Jam  |
+
++-----+------+
+
+3 rows in set (0.00 sec)
+
+ 
+
+mysql> select * from regemp102;
+
++-------+--------+-----+
+
+| bonus | salary | id  |
+
++-------+--------+-----+
+
+|  2000 |  20000 | 101 |
+
++-------+--------+-----+
+
+1 row in set (0.01 sec)
+
+ 
+
+mysql> select * from contemp102;
+
++----------+------------+-----+
+
+| duration | payPerHour | id  |
+
++----------+------------+-----+
+
+|        2 |        200 | 102 |
+
++----------+------------+-----+
+
+1 row in set (0.01 sec)
+
+ 
+
+ 
+
+JPA QL - JPA Query Language
+
+       - Database independent query because we are going to query the entity class using Query interface
+
+ 
+
+Query q=em.createQuery(String query);
+
+ 
+
+1. Create Person entity class
+
+ 
+
+@Entity
+
+@Table(name="person100")
+
+public class Person {
+
+   @Id
+
+   private Integer id;
+
+   private String name;
+
+   private String address;
+
+   private Integer age;
+
+   private String city;
+
+public Person(Integer id, String name, String address, Integer age, String city) {
+
+              super();
+
+              this.id = id;
+
+              this.name = name;
+
+              this.address = address;
+
+              this.age = age;
+
+              this.city = city;
+
+}
+
+public Integer getId() {
+
+              return id;
+
+}
+
+public void setId(Integer id) {
+
+              this.id = id;
+
+}
+
+public String getName() {
+
+              return name;
+
+}
+
+public void setName(String name) {
+
+              this.name = name;
+
+}
+
+public String getAddress() {
+
+              return address;
+
+}
+
+public void setAddress(String address) {
+
+              this.address = address;
+
+}
+
+public Integer getAge() {
+
+              return age;
+
+}
+
+public void setAge(Integer age) {
+
+              this.age = age;
+
+}
+
+public String getCity() {
+
+              return city;
+
+}
+
+public void setCity(String city) {
+
+              this.city = city;
+
+}
+
+public Person() {
+
+              super();
+
+              // TODO Auto-generated constructor stub
+
+}
+
+  
+
+   
+
+}
+
+ 
+
+2. Configure entity class in xml file
+
+ 
+
+3. Create main class
+
+ 
+
+public class Main2 {
+
+ 
+
+              public static void main(String[] args) {
+
+                             EntityManagerFactory emf=Persistence.createEntityManagerFactory("student_pu");
+
+                             EntityManager em=emf.createEntityManager();
+
+                             EntityTransaction et=em.getTransaction();
+
+                             et.begin();
+
+                            
+
+                             /*Person p1=new Person(100,"Ram","ABC Street",23,"Chennai");
+
+                             em.persist(p1);
+
+                             Person p2=new Person(101,"Sam","XYZ Street",24,"Mumbai");
+
+                             em.persist(p2);
+
+                             Person p3=new Person(102,"Raj","PQR Street",21,"Pune");
+
+                             em.persist(p3);
+
+                             Person p4=new Person(103,"Tam","RTY Street",22,"Delhi");
+
+                             em.persist(p4);
+
+                             Person p5=new Person(104,"Jam","BGR Street",33,"Noida");
+
+                             em.persist(p5);
+
+                             Person p6=new Person(105,"Jim","ABd Street",21,"Bangalore");
+
+                             em.persist(p6);*/
+
+                            
+
+                             //1. Select all properties from object
+
+                             /*Query q=em.createQuery("select p from Person p");
+
+                             List<Person> l=q.getResultList();
+
+                             //l.forEach(System.out::println);
+
+                             for(Person p:l)
+
+                                           System.out.println(p.getName()+" "+p.getAddress());*/
+
+                            
+
+                             //2. Select only particular properties from object
+
+                             /*Query q=em.createQuery("select p.name,p.age,p.city from Person p");
+
+                             List l=q.getResultList();
+
+                             Iterator i=l.iterator();
+
+                             while(i.hasNext()) {
+
+                                           Object[] o=(Object[])i.next();
+
+                                           System.out.println(o[0]+" "+o[1]+" "+o[2]);
+
+                             }*/
+
+                            
+
+                             //3. Select only single property
+
+                             /*Query q=em.createQuery("select p.age from Person p");
+
+                             List<Integer> l=q.getResultList();
+
+                             l.forEach(System.out::println);*/
+
+                            
+
+                             //4. Select all property from object but single value
+
+                             /*Query q=em.createQuery("select p from Person p where p.id=101");
+
+                             Person p=(Person)q.getSingleResult();
+
+                             System.out.println(p.getAddress()+" "+p.getCity());*/
+
+                            
+
+                             /*Scanner sc=new Scanner(System.in);
+
+                  System.out.println("Enter id");
+
+                  int pid=sc.nextInt();*/
+
+                 
+
+                  //5. Named parameter - using : with any name - :a, :xyz,:cb
+
+                  /*Query q=em.createQuery("select p from Person p where p.id=:abc and p.city=:xyz");
+
+                  q.setParameter("abc", pid);
+
+                  q.setParameter("xyz","Delhi");
+
+                             Person p=(Person)q.getSingleResult();
+
+                             System.out.println(p.getAddress()+" "+p.getCity());*/
+
+                 
+
+                  //6. Positional Parameter - ?1,?2 etc
+
+                  /*Query q=em.createQuery("select p from Person p where p.id=?1 and p.city=?2");
+
+                  q.setParameter(1,102);
+
+                  q.setParameter(2,"Pune");
+
+                             Person p=(Person)q.getSingleResult();
+
+                             System.out.println(p.getAddress()+" "+p.getCity());*/
+
+                 
+
+                             //7. Executing DML queries using executeUpdate()
+
+                             /*Query q=em.createQuery("update Person p set p.address=:addr, p.city=:city where p.id=:id");
+
+                  q.setParameter("addr","Pink Street");
+
+                  q.setParameter("city","Jaipur");
+
+                  q.setParameter("id",102);
+
+                  int i=q.executeUpdate();
+
+                  System.out.println(i+" rows updated");*/
+
+                            
+
+                             //8. Pagination - limiting the records
+
+                             Query q=em.createQuery("select p from Person p");
+
+                  q.setFirstResult(2);  //starts from 0th position, it will skip 2 records
+
+                             q.setMaxResults(2);  //print only 2 records
+
+                             List<Person> l=q.getResultList();
+
+                             for(Person p:l)
+
+                                           System.out.println(p.getName());
+
+                            
+
+                            
+
+                             et.commit();
+
+                             System.out.println("Success");
+
+                             em.close();
+
+                             emf.close();
+
+ 
+
+              }
+
+
+}
+
+===============================================
+
+Day 20
+
+JPA QL - Directly query the entity class
+
+ 
+
+NativeQuery  - query the table directly(SQL)
+
+ 
+
+@Entity
+
+@Table(name="person100")
+
+@NamedQueries({  //identify JPAQL query by their name
+
+              @NamedQuery(name="findPerson", query="select p from Person p"),
+
+              @NamedQuery(name="findPersonById", query="select p.name from Person p where p.id=:personid")
+
+})
+
+@NamedNativeQueries({  //identify sql query by their name
+
+              @NamedNativeQuery(name="findAllPerson", query="select * from person100", resultClass = Person.class)
+
+})
+
+public class Person {
+
+   @Id
+
+   private Integer id;
+
+   private String name;
+
+   private String address;
+
+   private Integer age;
+
+   private String city;
+
+}
+
+ 
+
+public class Main2 {
+
+ 
+
+              public static void main(String[] args) {
+
+                             EntityManagerFactory emf=Persistence.createEntityManagerFactory("student_pu");
+
+                             EntityManager em=emf.createEntityManager();
+
+                             EntityTransaction et=em.getTransaction();
+
+                             et.begin();
+
+                            
+
+                             //9. Native Query - query the table
+
+                             /*Query q=em.createNativeQuery("select * from person100");
+
+                             List l=q.getResultList();
+
+                             Iterator i=l.iterator();
+
+                             while(i.hasNext()) {
+
+                                           Object[] o=(Object[])i.next();
+
+                                           System.out.println(o[0]+" "+o[1]+" "+o[2]);
+
+                             }*/
+
+                            
+
+                             /*Query q=em.createNativeQuery("select * from person100",Person.class);
+
+                             List<Person> l=q.getResultList()
+
+                             for(Person p:l)
+
+                                           System.out.println(p.getAddress());*/
+
+                            
+
+                             //10. Named JPAQL query
+
+                             /*Query q=em.createNamedQuery("findPerson");
+
+                             List<Person> l=q.getResultList();
+
+                             for(Person p:l)
+
+                                           System.out.println(p.getAddress());*/
+
+                            
+
+                             /*Query q=em.createNamedQuery("findPersonById");
+
+                             q.setParameter("personid", 100);
+
+                             String s=(String)q.getSingleResult();
+
+                             System.out.println(s);*/
+
+                            
+
+                             Query q=em.createNativeQuery("findAllPerson");
+
+                             List<Person> l=q.getResultList();
+
+                             for(Person p:l)
+
+                                           System.out.println(p.getAddress());
+
+                            
+
+                            
+
+                             et.commit();
+
+                             System.out.println("Success");
+
+                             em.close();
+
+                             emf.close();
+
+ 
+
+              }
+
+ 
+
+}
+
+ 
+
+Logging framework - log4j,slf4j
+
+ 
+
+
+
+
+Prior to the advent of Enterprise Java Beans (EJB), Java developers needed to use JavaBeans to create Web applications. 
+Although JavaBeans helped in the development of user interface (UI) components, they were not able to provide services,
+such as transaction management and security, which were required for developing robust and secure enterprise applications.
+However, developing an enterprise application with EJB was not easy, as the developer needed to perform various tasks
+
+Spring : 
+
+The Spring framework(which is commonly known as Spring) has emerged as a solution to all these complications.
+This framework uses various new techniques such as Aspect-Oriented Programming (AOP), Plain Old Java Object (POJO), and dependency injection (DI), to develop enterprise applications, 
+thereby removing the complexities involved while developing enterprise applications using EJB 
+
+This framework mainly focuses on providing various ways to help you manage your business objects. 
+It made the development of Web applications much easier as compared to classic Java frameworks and Application Programming Interfaces (APIs), such as Java database connectivity(JDBC), JavaServer Pages(JSP), and Java Servlet.
+
+
+
+
+
+
+
+
+
+
+Spring boot framework : 
+
+	- Spring Boot is an extension of the spring framework
+	- Spring boot is an approach to develop spring based applications with minimal configuration
+	- Main advantage is "Autoconfiguration"
+		-start IOC, Component scanning, start webserver, create data-source, provide security.
+
+   -  open source framework, used to create faster java based application/web based appl, 
+	it is not a replacement of spring framework instead it provides production ready appl, 
+	so as a developer we are focusing mainly on business logic rather that doing all external configuration and downloading the jar files
+
+   - Developed Pivotal team
+
+- Spring Boot is built on top of the conventional spring framework. 
+-So, it provides all the features of spring and is yet easier to use than spring. 
+-Spring Boot is a microservice-based framework use to develop a standalone and production-ready application in very less time. 
+-In Spring Boot everything is auto-configured. We just need to use proper configuration for utilizing a particular functionality. 
+-Spring Boot is very useful if we want to develop REST API.
+
+
+Q) How IOC container will be started in Spring boot Application?
+- In main class their is a run method which is responsible for starting IOC Container.
+- For standalone app : spring-boot-starter : AnnotationConfigApplicationContext
+- For Web app : spring-boot-starter-web : AnnotationConfigServelateWebServerApplicationContext
+- For microservice based app : spring-boot-starter-webflux : AnnotationConfigReactiveWebServerApplicationContext
+
+- when we use starter-web boot will give tomcat as a default server and in webflux it will give netty server
+
+Dependency Injection : 
+- Injecting required dependencies for the objects
+- It can be done in 3ways:
+	1. Setter Injection : 
+		- In this first target object will be created, then it will go for dependent beans for object creation.
+		- 	
+	2. Constructor Injection : 
+		- In this first dependent class object will be created, then it will go for target beans for object creation.
+		- Therefor it is highly recommended to use
+	
+	3. Field Injection : 
+		- It uses Reflection API to access dependencies, which violates OOP concepts, so it is not recommended.
+
+Q) Banner in Spring boot?
+
+-It is a text log which comes at starting of spring boot app compliation
+-We can change the banner text according to our requirement by creating banner.txt file under resource
+-Modes in banner : Console(default),Log,Off
+-Modes can me set in application.properties file
+
+
+Q) What is component scanning?
+-It is process of identifying spring beans available in project
+-Component Scanning will start from base package
+-It will start scanning from base package, and then to sub package
+
+
+
+Spring Annotation : 
+
+1. @SpringBootApplication :
+-It is used at start class of springboot; 
+-This is equal to below 3 annotation:
+	-@SpringBootConfiguration
+	-@EnableAutoConfigurstion
+	-@ComponentScan
+
+
+
+2. @Bean : 
+-It is a method level annotation used to customize bean obj creation
+-It is recommended to keep @Bean in configuration class	
+-SpringBoot start class also acts as a configuration class 
+
+1. Presentation Layer
+
+The presentation layer is the top layer of the spring boot architecture.
+It consists of Views. i.e., the front-end part of the application. 
+It handles the HTTP requests and performs authentication. 
+It is responsible for converting the JSON field’s parameter to Java Objects and vice-versa. 
+Once it performs the authentication of the request it passes it to the next layer. i.e., the business layer.
+
+2. Business layer
+The business layer contains all the business logic. 
+It consists of services classes. It is responsible for validation and authorization.
+
+3. Persistence Layer
+The persistence layer contains all the database storage logic. 
+It is responsible for converting business objects to the database row and vice-versa.
+
+4. Database Layer
+The database layer contains all the databases such as MySql, MongoDB, etc. 
+This layer can contain multiple databases. It is responsible for performing the CRUD operations.
+
+Advantage
+
+1. easy to understand, develop faster appl so increase productivity
+
+2. reduce ur development time
+
+3. Avoid xml configurations
+
+4. Everything is autoconfigured, so no need for manual configuration
+
+5. Springboot comes with embedded server like Apache Tomcat(Default), Jetty, Undertow
+
+6. Springboot comes with in-memory database called h2 database used for testing purpose
+
+7. Springboot comes with inbuilt logging framework called logback,slf4j
+
+ 
+
+Drawbacks
+
+1. Migration effort - converting from existing spring project to springboot is not straight forward
+
+2. Deploying spring boot appl on other servers like jboss, weblogic etc is not straight forward
+
+3. Developed spring boot keeping microservice and cloud in mind
+
+ 
+
+Spring
+
+1. used to develop JavaEE framework for building appl(client + server)
+
+2. main feature is DI
+
+3. develop loosely coupled appl
+
+4. write lot of bailerplate code
+
+5. we have to explicitly configure the server
+
+6. dosent have inmemory db
+
+7. manually define dependencies in pom.xml
+
+8. requires bean configuration in separate xml file
+
+ 
+
+Springboot
+
+1. used to develop REST API(server part) based on MVC architecture
+
+2. main feature is autoconfiguration
+
+3. create standalone appl with less configuration
+
+4. reduce boilerplate code
+
+5. Springboot comes with embedded server
+
+6. comes with inmemory db
+
+7. Spring boot comes spring boot starter parent which will internally download all necessary jar files
+
+8. No xml configuration is needed
+
+ 
+
+Spring boot Scopes : 
+-Bean scope will represent how many objects will be created of a spring boot
+-Type of scopes : Singleton, Prototype, Request, Session
+-Singleton scope is a eager loading(object creation at start of IOC Container) bean and can create only one object.
+-Prototype scope is a lazy loading(object creation after calling getBean method) bean  and can create multiple objects.
+
+
+Auto wiring:
+- The process of injecting one class object into another class
+-It is used for dependency injection
+
+
+Bean Lifecycle:
+- When Java classes are managed by IOC container then they are called spring beans
+- Bean Lifecycle is managed by IOC container (creating objects, managing objects, destroying objects)
+- Following are the annotations used in Bean Lifecycle
+	1. @PostConstruct
+	2. @PreConstruct
+ 
+Spring boot dependency management
+
+    - manages dependencies and configuration automatically
+
+    - Spring-boot-starter-parent is a project starter, provide all basic configuration(jar files) to develop spring boot appl
+
+    - avoid version conflicts
+
+    - dependency section tells maven what jars to be downloaded, parent section tells what version of jars to be downloaded
+
+ 
+
+       <parent>
+
+                             <groupId>org.springframework.boot</groupId>
+
+                             <artifactId>spring-boot-starter-parent</artifactId>
+
+                             <version>2.7.17</version>
+
+                             <relativePath/> <!-- lookup parent from repository -->
+
+              </parent>
+
+ 
+
+Developing Spring boot appl - 3 ways
+
+1. Using Spring initializer - https://start.spring.io/
+
+2. Using STS(Spring Tool Suite) - IDE for springboot
+
+3. Springboot CLI(Command Line Interface)
+
+ 
+
+Springboot annotation - 3 types
+
+1. Spring core annotation
+
+     1. @Configuration
+
+     2. @Bean
+
+     3. @Autowired
+
+     4. @Qualifier
+
+     5. @Required
+
+     6. @Component
+
+     7. @Service, @Controller, @Repository
+
+ 
+
+2. Spring MVC annotation
+
+    - Controller prg - when client gives the request it will come to controller prg, for that particular request we have to write business logic
+
+ 
+
+@Controller - return the response in view page(JSP)
+
+@RestController - @Controller + @ResponseBody - return the response in json format
+
+ 
+
+@RequestMapping - used to map the request for a logic
+
+@RequestMapping(value="/fetchEmployee",method=RequestMethod.GET) - used to give GET request
+
+@RequestMapping(value="/insertEmployee",method=RequestMethod.POST) - used to give POST request
+
+@RequestMapping(value="/updateEmployee",method=RequestMethod.PUT) - used to give PUT request
+
+@RequestMapping(value="/removeEmployee",method=RequestMethod.DELETE) - used to give DELETE request
+
+  - @GetMapping, @PostMapping, @PutMapping, @DeleteMapping
+
+ 
+
+@RequestBody - used to get input as json format
+
+@RequestParam - used to return value present between ? and &
+
+@PathVariable - used to get value from the request
+
+ 
+
+3. Spring boot annotation
+
+      - @SpringBootApplication - @EnableAutoConfiguration + @Configuration + @ComponentScan
+
+ 
+
+ 
+
+1. Create Springboot project from Spring Initialzr
+
+ 
+
+https://start.spring.io/
+
+ 
+
+Project: Maven
+
+Language: Java
+
+Springboot version: 2.7.17
+
+ 
+
+Group: com.pack
+
+Artifact: SpringBoot1 (project name)
+
+Packaging: jar
+
+Java: 11
+
+Click Add Dependencies
+
+ 
+
+Spring web dependency - Build web, including RESTful, applications using Spring MVC. Uses Apache Tomcat as the default embedded container.
+
+ 
+
+Click Generate
+
+ 
+
+2. Right click project - click Extract all - Click Browse - Choose eclipse workspace - click Select Folder - Click Extract
+
+ 
+
+3. Goto File - Import - Select Existing Maven project - Click Next - Click Browse - Select extracted project from workspace - Click Select folder - click Finish
+
+ 
+
+4. Right click project - select properties  - Under Location - copy project path
+
+ 
+
+5. Open command prompt
+
+   >cd "paste project path"
+
+   >mvn clean install
+
+ 
+
+6. Right click project - Maven - Update project - Force update - click ok
+
+ 
+
+7. Create controller prg
+
+ 
+
+@RestController
+
+public class ExampleController {
+
+             
+
+              @RequestMapping(value="/msg1",method=RequestMethod.GET)
+
+              public String getMessage() {
+
+                             return "Welcome to Spring Boot";
+
+              }
+
+             
+
+              @GetMapping(value="/msg2")
+
+              public String getMessage1() {
+
+                             return "Hello to Spring Boot";
+
+              }
+
+ 
+
+}
+
+ 
+
+By default, Spring boot will read all configuration from application.properties/application.yml present in src/main/resources
+
+ 
+
+server.port=2000
+
+ 
+
+8. Start the appl
+
+http://localhost:2000/msg1
+
+http://localhost:2000/msg2
+
+ 
+
+9. We have to provide context path, in application.properties
+
+  server.servlet.context-path=/app
+
+ 
+
+http://localhost:2000/app/msg1
+
+http://localhost:2000/app/msg2
+
+ 
+
+10. If we provide wrong request it will give whitelabel error page, instead we want to print some error message for that we have to implement ErrorController interface and override getErrorPath()
+
+ 
+
+@RestController
+
+public class ExampleController implements ErrorController{
+
+             
+
+              private static final String PATH="/error";
+
+             
+
+              @RequestMapping(value="/msg1",method=RequestMethod.GET)
+
+              public String getMessage() {
+
+                             return "Welcome to Spring Boot";
+
+              }
+
+             
+
+              @GetMapping(value="/msg2")
+
+              public String getMessage1() {
+
+                             return "Hello to Spring Boot";
+
+              }
+
+             
+
+              @GetMapping(value=PATH)
+
+              public String getErrorMsg() {
+
+                             return "Requested Page does not found";
+
+              }
+
+             
+
+              public String getErrorPath() {
+
+                             return PATH;
+
+              }
+
+ 
+
+}
+
+ 
+
+11. When we create any program it should be always present as subpackage of main class, if we create outside the main class pkg then we have to use @ComponentScan which is used to scan the package and execute the prg
+
+ 
+
+@SpringBootApplication
+
+@ComponentScan(basePackages = {"com.hcl","com.pack.SpringBoot11"})
+
+public class SpringBoot11Application {
+
+ 
+
+              public static void main(String[] args) {
+
+                             SpringApplication.run(SpringBoot11Application.class, args);
+
+              }
+
+ 
+
+}
+
+ 
+
+- spring-boot-devtools dependency - no need to restart the server each time when we change in appl, the server will automatically restart when we change in appl
+
+ 
+
+<dependency>
+
+      <groupId>org.springframework.boot</groupId>
+
+      <artifactId>spring-boot-devtools</artifactId>
+
+      <scope>runtime</scope>
+
+      <optional>true</optional>
+
+    </dependency>
+
+==================================
+Day 21
+
+Handson
+
+1. Create Spring boot application to implement profiles likes prod,dev and print value of message from properties file.
+
+Note: create all profiles in single file
+
+ 
+
+2. Create Spring boot application to read and print all user information from user.properties file present in local machine(ie)C:/handson folder
+
+ 
+
+3. Create Spring Boot MVC appl, to display employee details like name, age, salary in employee.jsp
+
+ 
+
+ 
+
+Spring MVC - Where we return response as JSP page
+
+ 
+
+client request - Controller(used to handle req and res) - Service (write logic) - model class - view page(JSP)
+
+ 
+
+1. Create Spring boot project with spring web dependency and with war packaging
+
+ 
+
+To make Springboot understand JSP, we have provide 2 dependency
+
+ 
+
+                <dependency>
+
+                                           <groupId>org.apache.tomcat.embed</groupId>
+
+                                           <artifactId>tomcat-embed-jasper</artifactId>
+
+                                           <scope>provided</scope>
+
+                             </dependency>
+
+                             <dependency>
+
+                                           <groupId>javax.servlet</groupId>
+
+                                           <artifactId>jstl</artifactId>
+
+                             </dependency>
+
+ 
+
+2. Create Controller prg
+
+ 
+
+@Controller
+
+public class MainController {
+
+             
+
+              @GetMapping("/info")
+
+              public String getInfo() {
+
+                             return "index";  //name of jsp page
+
+              }
+
+             
+
+              @GetMapping("/info1")
+
+              public String getInfo1(ModelMap m,Model m1,Map m2) {
+
+                             m.addAttribute("name", "Ram");	
+
+                             m1.addAttribute("age", 24);
+
+                             m2.put("mark", 80);
+
+                             return "first";
+
+              }
+
+ 
+
+}
+
+ 
+
+ 
+
+3. Create jsp page as per return value inside webapp - WEB-INF - views(any name) - create jsp page
+
+ 
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+
+    pageEncoding="ISO-8859-1"%>
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="ISO-8859-1">
+
+<title>Insert title here</title>
+
+</head>
+
+<body>
+
+<h2>Welcome to SPRING MVC</h2>
+
+</body>
+
+</html>
+
+ 
+
+4. Configure jsp info in application.properties
+
+ 
+
+server.port=1000
+
+server.servlet.context-path=/mvc
+
+spring.mvc.view.prefix=/WEB-INF/views/
+
+spring.mvc.view.suffix=.jsp
+
+#prefix+viewname+suffix=/WEB-INF/views/index.jsp
+
+ 
+
+To pass value from controller prg to JSP prg we can use ModelMap class or Model class or Map intf
+
+ 
+
+5. Create first.jsp
+
+ 
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="ISO-8859-1">
+
+<title>Insert title here</title>
+
+</head>
+
+<body>
+
+<h2>Welcome ${name} has ${age} and with ${mark}</h2>
+
+</body>
+
+</html>
+
+ 
+
+Springboot Jetty
+
+1. Exclude Tomcat server from web dependency
+
+ 
+
+<dependency>
+
+                                           <groupId>org.springframework.boot</groupId>
+
+                                           <artifactId>spring-boot-starter-web</artifactId>
+
+                                           <exclusions>
+
+                                              <exclusion>
+
+                                                 <groupId>org.springframework.boot</groupId>
+
+                                                 <artifactId>spring-boot-starter-tomcat</artifactId>
+
+                                              </exclusion>
+
+                                           </exclusions>
+
+                             </dependency>
+
+ 
+
+2. Comment ur tomcat server and tomcat-embed-jasper, jstl
+
+3. Include Jetty dependency
+
+<dependency>
+
+                                           <groupId>org.springframework.boot</groupId>
+
+                                           <artifactId>spring-boot-starter-jetty</artifactId>
+
+                             </dependency>
+
+4. To make Jetty to understand JSP page
+
+               <dependency>
+
+                                           <groupId>org.eclipse.jetty</groupId>
+
+                                           <artifactId>apache-jsp</artifactId>
+
+                                           <scope>provided</scope>
+
+                             </dependency>
+
+                             <dependency>
+
+                                           <groupId>org.eclipse.jetty</groupId>
+
+                                           <artifactId>apache-jstl</artifactId>
+
+                             </dependency>
+
+ 
+
+ 
+
+CommandLineRunner interface
+
+      - We can execute any task just before spring boot application startup
+      - It will be call by run method and will executed only once.
+	
+      - UseCases : 1. delete temporary tables data when app sarted
+		   2. 
+      -Types : 
+	1. ApplicationRunner (Functional Interface)
+		
+		public void run(ApplicationArgument s){
+
+        	}
+
+	2. CommandLineRunner (Functional Interface)
+
+		public void run(String... argsFSprin){
+
+        }
+ 
+      - public void run(String...s){
+
+        }
+
+ 
+
+@SpringBootApplication
+
+@Order(value=2)
+
+public class SpringBoot2Application implements CommandLineRunner{
+
+             
+
+              protected final static Log log=LogFactory.getLog(SpringBoot2Application.class);
+
+ 
+
+              public static void main(String[] args) {
+
+                             SpringApplication.run(SpringBoot2Application.class, args);
+
+                             log.info("Inside main method");
+
+              }
+
+ 
+
+              @Override
+
+              public void run(String... args) throws Exception {
+
+                             log.info("inside run method");
+
+              }
+
+ 
+
+}
+
+ 
+
+@Component
+
+@Order(value=3)
+
+public class CommandLineRunner1 implements CommandLineRunner {
+
+ 
+
+              protected final static Log log=LogFactory.getLog(CommandLineRunner1.class);
+
+             
+
+              @Override
+
+              public void run(String... args) throws Exception {
+
+                             log.info("Inside commandlinerunner1");
+
+              }
+
+ 
+
+}
+
+ 
+
+@Component
+
+@Order(value=1)
+
+public class CommandLineRunner2 implements CommandLineRunner {
+
+ 
+
+              protected final static Log log=LogFactory.getLog(CommandLineRunner2.class);
+
+             
+
+              @Override
+
+              public void run(String... args) throws Exception {
+
+                             log.info("Inside commandlinerunner2");
+
+              }
+
+ 
+
+}
+
+ 
+
+ApplicationRunner interface
+
+    - We can execute any task just before spring boot application startup
+
+    - 
+
+ 
+
+Spring boot profiling
+
+      - In enterprise appl we have many env like dev, test, prod etc and each env needs specific configuration related to that env and configured in application.properties, we cant configure everything in single file so to use different properties file in different env we use profiling
+
+ 
+
+1. we need to create different env related properties files by application-profilename.properties (eg) application-dev.properties, application-prod.properties
+
+2. spring.profiles.active=profilename in application.properties, it will invoke the related profiles
+
+ 
+
+@Value - used to read property from application.properties to controller prg
+
+ 
+
+@Profile - used to programmatically control files based on profiles
+
+ 
+
+application.properties
+
+message=Welcome default user
+
+server.port=2000
+
+spring.profiles.active=dev
+
+ 
+
+application-prod.properties
+
+message=Welcome production user
+
+server.port=1002
+
+ 
+
+application-dev.properties
+
+message=Welcome development user
+
+server.port=1001
+
+ 
+
+@RestController
+
+public class ProfileController {
+
+             
+
+              @Value("${message}")  //Spring Expression Language
+
+              private String msg;         
+
+ 
+
+              @GetMapping("/")
+
+              public String hello() {
+
+                             return "Hello world from controller " + msg;
+
+              }
+
+}
+
+ 
+
+ 
+
+@Configuration
+
+@Profile("prod")
+
+public class AppConfig {
+
+    @PostConstruct
+
+              public void print() {
+
+                             System.out.println("This method is invoked only for production profile");
+
+              }
+
+}
+
+ 
+
+ 
+
+application.properties
+
+1. It is represent as a sequence of key value pair
+
+server.port=1000
+
+server.servlet.context-path=/app
+
+ 
+
+2. This file is supported only in Java lang
+
+ 
+
+3. support only key value pairs in the form of string
+
+ 
+
+4. If we want to handle different profiles then we have to create different properties files
+
+ 
+
+application.yml
+
+1. It is represent in hiearchial format
+
+ 
+
+server:
+
+   port: 1000
+
+   servlet:
+
+      context-path: /app
+
+ 
+
+spring:
+
+   profiles:
+
+      active: dev
+
+ 
+
+2. This file is supported in Java, Python etc
+
+ 
+
+3. support key value pairs, map, list, scalar datatype
+
+ 
+
+4. All configuration related to multiple profiles can be handled in single yml file
+
+ 
+
+server:
+
+   port: 1000
+
+   servlet:
+
+      context-path: /app
+
+ 
+
+spring:
+
+   profiles:
+
+      active: dev
+
+ 
+
+----
+
+spring:
+
+   profiles: dev
+
+server:
+
+   port: 2000
+
+ 
+
+----
+
+spring:
+
+   profiles: prod
+
+server:
+
+   port: 2001
+
+ 
+
+ 
+
+@PropertySource - used to read single property file with different name present in different location
+
+@PropertySources - used to read multiple property files
+
+ 
+
+@ConfigurationProperties - used to map entire properties in properties file to a separate java bean object
+
+ 
+
+Lombok dependency - used to reduce boilerplate code (ie) getters, setters, default constructor, argument constructor, toString,  log
+
+ 
+
+student.properties
+
+student.id=1000
+
+student.name=Ram
+
+student.address=Chennai
+
+student.age=24
+
+ 
+
+student1.properties
+
+student.email=ram@gmail.com
+
+student.course=CSE
+
+student.mark=89
+
+ 
+
+@Configuration
+
+//@PropertySource("classpath:student.properties")
+
+//@PropertySource("file:\\C:\\Training\\student1.properties")
+
+@PropertySources({
+
+              @PropertySource("classpath:student.properties"),
+
+              @PropertySource(file:\\C:\\Training\\student1.properties)
+
+})
+
+@ConfigurationProperties(prefix="student")
+
+//@Getter
+
+//@Setter
+
+//@NoArgsConstructor
+
+//@AllArgsConstructor
+
+//@ToString
+
+@Data
+
+public class StudentProps {
+
+   private String name;
+
+   private String address;
+
+   private Integer age;
+
+   private String email;
+
+   private String course;
+
+}
+
+ 
+
+ 
+
+@RestController
+
+@Log4j2
+
+public class StudentController {
+
+             
+
+              @Value("${student.id}")
+
+              private Integer id;
+
+             
+
+              @Value("${student.mark}")
+
+              private Integer mark;
+
+             
+
+              @Autowired
+
+              StudentProps stuProp;
+
+ 
+
+              @GetMapping("/student")
+
+              public String getStudentInfo() {
+
+                             return id+" "+mark+" "+stuProp.getName()+" "+stuProp.getAddress();
+
+              }
+
+}
+
+
+
+
+
+
+
+
+Handson
+1. Create springboot appl to insert student details into the db using commandline runner
+ 
+ 
+@Value
+1. Injecting properties one by one
+2. Loose binding/loose grammar is not supported (ie) attribute name should be matching
+3. Support SpEL (${})
+4. Validation of properties is not supported
+4. Support only scalar datatype
+ 
+@ConfigurationProperties
+1. Bulk injection of properties
+2. Loose binding/loose grammar is  supported (ie) no need to match attribute name (ie) special char or cases
+3. Not support SpEL
+4. Validation of properties is supported
+5. Supports all datatypes as well as objects
+ 
+mail.properties
+#scalar datatype
+mail.to=abc@gmail.com
+mail.from=xyz@gamil.com
+mail.age=25
+mail.firstname=Ramu
+mail.lastname=kumar
+ 
+#complex datatype
+mail.cc=uvw@gmail.com,efh@gmail.com
+mail.bcc=mno@gmail.com,pqr@gmail.com
+ 
+#Nested datatype
+mail.credential.username=ram
+mail.credential.password=abcde
+ 
+ 
+To do validation
+ 
+<dependency>
+                                           <groupId>org.hibernate.validator</groupId>
+                                           <artifactId>hibernate-validator</artifactId>
+                                           <version>6.0.5.Final</version>
+                             </dependency>
+                             <dependency>
+                                           <groupId>javax.validation</groupId>
+                                           <artifactId>validation-api</artifactId>
+                                           <version>2.0.0.Final</version>
+                             </dependency>
+ 
+@Validated - to do validating the properties in properties file
+@Valid - to do validation for nested class properties
+ 
+@Configuration
+@PropertySource("classpath:mail.properties")
+@ConfigurationProperties(prefix="mail")
+@Data
+@Validated
+public class MailProps {
+              @NotBlank
+    private String to;
+              @NotBlank
+    private String from;
+              @Min(value=20)
+              @Max(value=40)
+    private Integer age;
+              private String FIRSTNAME;
+   
+    private String[] cc;
+    private List<String> bcc;
+   
+    @Valid
+    private Credential credential=new Credential();
+   
+    @Data
+    public class Credential {
+              @NotBlank
+              private String username;
+              @Size(max=8,min=4)
+              private String password;
+    }
+}
+ 
+ 
+@RestController
+@Log4j2
+public class StudentController {
+             
+              @Value("${student.id}")
+              private Integer id;
+             
+              @Value("${student.mark}")
+              private Integer mark;
+             
+              @Value("${mail.lastname}")
+              private String lname;
+             
+              @Autowired
+              StudentProps stuProp;
+             
+              @Autowired
+              MailProps mail;
+ 
+              @GetMapping("/student")
+              public String getStudentInfo() {
+                             return id+" "+mark+" "+stuProp.getFirstname()+" "+stuProp.getAddress();
+              }
+             
+              @GetMapping("/mail")
+              public String mailInfo() {
+                             return mail.getFrom()+" "+mail.getCc()+" "+mail.getBcc()+" "+mail.getCredential().getUsername()+" "+mail.getFIRSTNAME();
+              }
+}
+ 
+Springboot Interceptors
+     - used to intercept client request and response
+     - Interceptors are similar to Filters(servlet), but interceptors are applied to the request that are sending to the controller prg
+     - We have to implement HandlerInterceptor interface - 3 methods
+1. preHandle() - perform any operation before sending request to controller
+ 2. postHandle() - perform any operation before sending response to client
+3. afterCompletion() - perform any operation after completing request and response
+ 
+@RestController
+@Log4j2
+public class EmployeeController {
+ 
+              @GetMapping("/emp")
+              public String getEmployeeInfo() {
+                             log.info("Inside EmployeeController");
+                             return "Employee are working";
+              }
+}
+ 
+@Component
+@Log4j2
+public class TimerInterceptor implements HandlerInterceptor {
+             
+    @Override
+              public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+                                           throws Exception {
+                             log.info("Inside preHandle");
+                             request.setAttribute("startTime", System.currentTimeMillis());
+                             return true;
+              }
+   
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+                             ModelAndView modelAndView) throws Exception {
+              log.info("Inside postHandle");
+    }
+   
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+                             throws Exception {
+              log.info("Inside afterCompletion");
+              long totalTime=System.currentTimeMillis()-(long)request.getAttribute("startTime");
+              System.out.println("Total time taken is "+totalTime);
+    }
+}
+ 
+ 
+@Configuration
+public class EmployeeConfig implements WebMvcConfigurer {
+             
+              @Autowired
+              TimerInterceptor timerInterceptor;
+ 
+              @Override
+              public void addInterceptors(InterceptorRegistry registry) {
+                  //registry.addInterceptor(timerInterceptor); //this interceptor will be invoked for all controller prg
+              registry.addInterceptor(timerInterceptor).addPathPatterns("/emp","/mail");
+              }
+}
+ 
+JDBC
+JPA
+ 
+Spring Data JPA
+    - Used to persist data into database
+    - It is a library that adds an extra layer of abstraction on top of JPA providers
+ 
+JPA providers - vendors that provide the implementation of JPA specification like Hibernate, iBatis, Toplink etc
+ 
+JPA specification - provides mapping of entity class with column of database table using @Entity, @Table, @Id etc
+ 
+3 layers
+1. Spring Data JPA - Create JPA Repository - 2 interface
+a. JpaRepository<Entityclassname, datatype of PK> interface - used to perform CRUD and batch operation
+    - T getById(int id) - deprecated
+    - T getOne(int id) - deprecated
+    - T getReferenceById(int id) - fetch single object
+    - List<T> findAll() - return multiple object
+    - T saveAndFlush(T t) - store single object into db
+    - T saveAllAndFlush(Iterable) - store multiple object into db
+    - void deleteAllByIdInBatch(Iterable)
+    - void deleteAllInBatch()
+b. JpaSpecificationExecutor<Entityclassname> interface - used to retrieve data
+based on some condition
+ 
+2. Spring data commons layer - 3 interface
+a. Repository<Entityclassname, datatype of PK> interface - marker interface
+b. CrudRepository<Entityclassname, datatype of PK> interface - used to perform Crud operation
+    - T save(T t)- store single object
+    - T saveAll(Iterable) - store multiple object
+    - Optional findById(int id) - return single object
+    - Iterable findAll() - fetch all object
+    - boolean existsById(int id)
+    - void deleteById(int id) - delete single object based on id
+    - void delete(T t) - delete single object
+    - void deleteAll()
+c. PagingAndSortingRepsitory<Entityclassname, datatype of PK> interface - used for paging and sorting purpose
+ 
+3. JPA providers - vendors that provide the implementation of JPA specification like Hibernate, iBatis, Toplink etc
+ 
+Repository interface
+  extends
+CrudRepository interface
+  extends
+PagingAndSortingRepository interface
+  extends
+JpaRepository interface
+ 
+1. Create spring boot project with spring data jpa, mysql, lombok dependency
+  
+2. Configure db info in application.properties
+spring.datasource.url=jdbc:mysql://localhost:3306/jpa
+spring.datasource.username=root
+spring.datasource.password=root
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+spring.jpa.show-sql = true
+spring.jpa.hibernate.ddl-auto = update
+#dialect will generate the query based on particular db
+spring.jpa.database-platform=org.hibernate.dialect.MySQL5Dialect
+ 
+3. Create entity class
+ 
+@Entity
+@Table(name="empl2023")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class Employee {
+  @Id
+  private Integer id;
+  private String name;
+  private String gender;
+  private String email;
+  private String dept;
+  private Double salary;
+}
+ 
+4. Create repository interface
+ 
+public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
+ 
+}
+ 
+5.
+ 
+@SpringBootApplication
+public class SpringDataApplication implements CommandLineRunner{
+             
+              @Autowired
+              EmployeeRepository empRepo;
+ 
+              public static void main(String[] args) {
+                             SpringApplication.run(SpringDataApplication.class, args);
+              }
+ 
+              @Override
+              public void run(String... args) throws Exception {
+                             //insertEmployee();
+                             //fetchEmployee(104);
+                             //fetchAllEmployee();
+                             //updateEmployee(103);
+                             deleteEmployee(103);
+              }
+ 
+              private void deleteEmployee(int i) {
+                             if(empRepo.existsById(i)) {
+                                           //Employee e=empRepo.findById(i).get();
+                                           //empRepo.delete(e);
+                                           empRepo.deleteById(i);
+                             }
+              }
+ 
+              private void updateEmployee(int i) {
+                             if(empRepo.existsById(i)) {
+                                           Employee e=empRepo.findById(i).get();
+                                           e.setSalary(60000.0);
+                                           empRepo.save(e);
+                             }
+              }
+ 
+              private void fetchAllEmployee() {
+                             List<Employee> l=empRepo.findAll();
+                             l.forEach(System.out::println);
+              }
+ 
+              private void fetchEmployee(int i) {
+                             Optional opt=empRepo.findById(i);
+                             System.out.println(opt.get());
+              }
+ 
+              private void insertEmployee() {
+                             /*Employee e1=new Employee(100,"Ram","male",ram@gmail.com,"HR",20000.0);
+                             empRepo.save(e1);*/
+                            
+                             List<Employee> l1=new ArrayList<>();
+                             Employee e1=new Employee(101,"Sam","male",sam@gmail.com,"Sales",25000.0);
+                             l1.add(e1);
+                             Employee e2=new Employee(102,"Saj","male",saj@gmail.com,"IT",35000.0);
+                             l1.add(e2);
+                             Employee e3=new Employee(103,"Lim","female",lim@gmail.com,"HR",15000.0);
+                             l1.add(e3);
+                             Employee e4=new Employee(104,"Amy","female",amy@gmail.com,"Sales",36000.0);
+                             l1.add(e4);
+                             Employee e5=new Employee(105,"Adam","male",adam@gmail.com,"IT",45000.0);
+                             l1.add(e5);
+                             Employee e6=new Employee(106,"Tam","male",Tam@gmail.com,"Sales",55000.0);
+                             l1.add(e6);
+                             empRepo.saveAll(l1);
+              }
+ 
+}
+
+ 

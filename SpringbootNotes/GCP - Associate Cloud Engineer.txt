@@ -1,0 +1,35 @@
+GCP - Associate Cloud Engineer
+
+Topics covered : 
+-Creating Billing Account
+-Establishing Billing Budgets
+-Setting up Billing Exports
+-Linking Billing Account to a Project
+-GCP Pricing Calculator
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

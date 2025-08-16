@@ -1,0 +1,106 @@
+
+
+#Interpreted and Compliled languages:
+
+*Interpreter language : 
+	-No need to generate machine instructions(oject code)
+	-Has its own virtual enviroment that communiactes with te computer
+	-Machine independent
+	-Has its own virtual environment to communicates with computer.
+	-ex. Pyhton,Perl,PHP,Ruby
+	-Language->ReadyToRun->VM->MachineCode
+
+*Compiled lang. : 
+	-Code is converted to object code
+	-Change in code requires recompilation
+	-Manual efforts required to run code	
+	-sx. C,C++,Rust,Go
+	-Language->MachineCode->ReadyToRun
+
+
+#AI ToolBox :	
+	1.Data Gathering(Spark,Hadoop)
+	2.Data pre-processing(R,Python Pandas)
+	3.Model Building(TensorFlow,keras)
+	4.Model Management(MetaFlow,ML flow)
+	5.Model Production(TF Serving)
+	6.Data Analysis(Tableau,Ploty)
+
+
+#Why use pyhton fro AI?
+	-Existing implementations allow for writing less code.
+	-Large variety of pen source pre-built pyhton libaries.
+	-Cross platform AI devlp.
+	-Active community and support
+	-Easy to learn
+	-Industry demands.
+
+#Python AI libraries:
+	-TensorFlow(by Google)
+	-Sxikit-learn : ML
+	-NumPy() : arrays and numeric methods
+	-Theano() : numeric methods
+	-Keras() : DL
+	-NLTK : Natural Language Processing
+	-SciPy : math for engineering
+	-Pandas : data analysis
+	-Open CV - Image Processing
+	-PyTorch - deep Learning(by facebook)
+	
+
+
+
+# Companies that support Python:
+	-Google,Microsoft,Amazon,Facebook,Apple
+
+#Python IDEs:
+	-PyCharm, Spyder,Eclipse,Atom,Jupyter Notebook,Google Collab
+
+
+
+# Setting Up the Basic AI Environment: 
+
+1.Install Anaconda 
+2.On prompt run "Anaconda Prompt" to start menu
+3.To create project : conda create -n myproject python=3 scikit-learn numpy pandas
+4.Then it will asked to procced : type - 'Y' 
+5.conda activate myproject - to activate environent
+6.Start Jupyter lab
+7.AI environmrnt is ready!!!!!!!
+
+
+
+
+
+#Benifits of Anaconda:
+-Open Source
+-GUI-driven tool
+-Support both R and pyhton
+-Support more than 7500+ libraries
+-Manage library dependencies
+-Entrprise Support
+
+
+
+#Basic ML Models: 
+1.Supervised learning: 
+	-It has label data set.
+	-Algo. built for Regression and Classcification 
+2.Unsupervised learning: 
+	-It has no label data set
+	-Algo. built for Clustring 
+
+*Commanly used Models:
+1.Linear /Logistic regression.
+2.Random Forest(Tree Based model)
+3.K-Nearest Neighbors(KNN)
+4.Support Vector Models(SVM)
+
+*Applications:
+1.Linear regression : House price
+2.Random Forest : Fake news prediction
+3.SVM : Anamoly Detection
+4.KNN : Image Similarity
+
+
+
