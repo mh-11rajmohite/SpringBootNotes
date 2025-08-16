@@ -1,0 +1,459 @@
+=================
+Spring Data JPA
+=================
+
+JPA : Java Persistence API
+
+JPA is used to communicate with Databases using Java applications.
+
+We Have several options to communicate with database using java applications
+
+1) JDBC  (boiler plate code)
+
+2) Spring JDBC (we have to write queries)
+
+3) Hibernate (ORM -> Obj relational mapping)
+
+4) Spring ORM (interally uses hibernate)
+
+5) Spring Data JPA (latest)
+
+
+1) What is Data Source
+
+2) What is Entity
+
+3) What is Repository
+
+=> DataSource represents set of connections with database 
+  (it will create connection pool).
+
+Note: We need to configure datasource properties in "application.properties" file.
+
+=> Entity is a java class which is mapped with database table. We will use below annotations in entity class.
+
+	@Entity : Represent class as entity cls (mandatory)
+	
+	@Table : map class name with tbl name (optional)
+	
+	@Id : Represents the variable mapped with PK column (mandatory)
+	
+	@Column : map cls variable name with tbl column name (optional).
+		
+
+=> Repository is a interface provided by Data JPA to perform CRUD operations.
+
+Note: In data jpa mainley we have 2 repository interfaces 
+
+1) CrudRepository : We can perform CRUD Operations
+
+2) JpaRepository :	CRUD Ops + Sorting + Pagination + QBE	
+
+=======================================
+Developing First Data JPA Application
+=======================================
+
+1) Create SpringBoot application with below dependencies
+
+	a) starter-data-jpa
+	b) mysql-driver	
+
+2) Configure datasource properties in application.properties file	
+
+spring.datasource.url=
+spring.datasource.username=
+spring.datasource.password=
+
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.hibernate.ddl-auto=update
+
+3) Create Entity class 
+
+	@Entity
+	public class Employee {	
+		@Id
+		private int empId;		
+		private String empName;		
+		private Double empSalary;		
+		// setters & getters	
+	}
+	
+3) Create Our Repository interface by extending Jpa Repository interface.
+
+public interface EmpRepository extends CrudRepository<Employee, Integer> {
+
+}
+
+4) Test application by calling EmpRepository methods using start class.
+
+
+
+
+--------------------------------------------
+Assignment
+-------------------------------------------
+1) Database Setup 
+	 - MySQL DB Server 
+	 - MySQL workbench (Client s/w)
+	 
+Ref : https://www.youtube.com/watch?v=EsAIXPIsyQg	 
+
+2) Developing First Data JPA app to insert emp record into mysql database table.	
+
+Ref : https://www.youtube.com/watch?v=ZGKHCJsp4hg		
+
+
+3) Work with all Crud repository methods 
+
+
+--------------------------------------------------------------
+
+Assignment : Develop springboot application to read csv file data and store it into database table.
+
+1,monitor,7500.00		
+2,cpu,17500.00		
+3,keyboard,2500.00	
+4,mouse,500.00	
+
+=============================================================================
+
+=> Using Data JPA we can perform operations with Database table in 3 ways
+
+		1) Predefined Repository methods
+
+		2) findByXXX methods
+
+		3) Custom Queries
+
+==================
+findByXXX methods
+==================
+
+=> findBy methods are used to perform only select operations on the table (We can't use for insert, update and delete).
+
+=> findBy methods are used to execute queries with 'where' clause
+
+
+Ex : select * from employee where emp_country='India';
+
+	 select * from employee where emp_gender='Male';
+
+	 select * from employee where emp_salary >= 5000
+
+	 select * from employee where emp_gender='Fe-Male' and emp_country='India'
+
+
+=> When we are using findBy methods, method name will play very important role. Based on method name data jpa will construct query for execution.
+
+Note: If we don't write method name properly then jpa will not accept it.
+
+Note: findBy methods we will write inside Repository interface as abstract methods.
+
+
+-------------------Entity Class----------------
+
+@Entity
+public class Employee {
+
+	@Id
+	private Integer empId;
+	private String empName;
+	private Double empSalary;
+	private String empGender;
+	private String empCountry;
+
+	//setters & getters
+	// toString()
+
+}
+
+----------------Repository Interface -------------------
+
+public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
+
+	// select * from employee where emp_country='India';
+	public List<Employee> findByEmpCountry(String country);
+
+	// select * from employee where emp_gender='Male'
+	public List<Employee> findByEmpGender(String gender);
+
+	// select * from employee where emp_gender='Male' and emp_country='India'
+	public List<Employee> findByEmpGenderAndEmpCountry(String gender, String country);
+
+	// select * from employee where emp_salary > 5000
+	public List<Employee> findByEmpSalaryGreaterThan(Double salary);
+
+}
+
+---------------Service class --------------------------------
+
+@Service
+public class EmployeeService {
+
+	private EmployeeRepository empRepo;
+
+	public EmployeeService(EmployeeRepository empRepo) {
+		this.empRepo = empRepo;
+	}
+
+	public void saveEmployee() {
+		Employee emp = new Employee();
+		emp.setEmpId(104);
+		emp.setEmpName("Smith");
+		emp.setEmpSalary(7000.00);
+		emp.setEmpGender("Male");
+		emp.setEmpCountry("Germany");
+		empRepo.save(emp);
+		System.out.println("***Record Saved... *****");
+	}
+
+	public void getAllEmps() {
+		Iterable<Employee> emps = empRepo.findAll();
+		// emps.forEach(System.out::println);
+		emps.forEach(e -> {
+			System.out.println(e);
+		});
+	}
+
+	public void getEmpsWithCountry() {
+		List<Employee> emps = empRepo.findByEmpCountry("India");
+		emps.forEach(System.out::println);
+	}
+
+	public void getEmpsWithGender() {
+		List<Employee> emps = empRepo.findByEmpGender("Male");
+		emps.forEach(System.out::println);
+	}
+
+	public void getEmpsWithGenderAndCountry() {
+		List<Employee> emps = empRepo.findByEmpGenderAndEmpCountry("Male", "India");
+		emps.forEach(System.out::println);
+	}
+
+	public void getEmpsBasedOnSalary() {
+		List<Employee> emps = empRepo.findByEmpSalaryGreaterThan(5000.00);
+		emps.forEach(System.out::println);
+	}
+}
+
+-------------------------- start class -------------------------------------------
+
+
+@SpringBootApplication
+public class Application {
+
+	public static void main(String[] args) {
+		ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
+
+		EmployeeService empService = context.getBean(EmployeeService.class);
+
+		// empService.saveEmployee();
+
+		// empService.getAllEmps();
+
+		// empService.getEmpsWithCountry();
+
+		// empService.getEmpsWithGender();
+
+		// empService.getEmpsWithGenderAndCountry();
+		
+		empService.getEmpsBasedOnSalary();
+	}
+
+}	
+
+
+================
+Custom Queries	
+================
+
+=> To Execute our own queries using data jpa then we will use this Custom Queries concept.
+
+=> To work with custom queries, we will use @Query annotation
+
+=> Custom Queries methods we will write in data jpa repository interface.
+
+=> Custom Queries we can write in 2 ways
+
+			1) Native SQL (plain sql)
+
+			2) HQL
+
+============
+SQL Queries
+============
+
+=> SQL Queries are db dependent queries.
+
+Ex: SQL queries we are writing to communicate with oracle db may not work with mysql db.
+
+=> In SQL query we will use table names and column names directley.
+
+	Ex: select * from emp_data where emp_salary >= 10000;
+
+Note: If we want to change our application from one DB to another DB then we have to modify SQL queries and we have to re-test entire application.
+
+=> To make our application loosely coupled with database we can use HQL queries.
+
+============
+HQL Queries
+============
+
+=> HQL stands for hibernate query language. 
+
+=> HQL queries are database independent.
+
+=> HQL queries will make our app loosely coupled with database.
+
+=> In HQL queries we will use entity class name and entity cls variable names.
+
+		Ex : From Employee where empGender='Male';
+
+Note: Database can't understand HQL directley.
+
+=> HQL should be converted to SQL for execution.	
+
+=> Dialect classes are used to convert HQL to SQL.
+
+=> Every DB will have its own dialect class
+
+	Ex: OracleDialect, MySQLDialect, DB2Dialect....
+
+
+
+SQL : select * from emp_tbl
+HQL : From Employee
+
+SQL : select * from emp_tbl where emp_id=101;
+HQL : From Employee where empId=101
+
+SQL : select emp_id, emp_name from emp_tbl
+HQL : select empId, empName from Employee
+
+--------------------------------------------------------------------
+public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
+
+	@Query("from Employee")
+	public List<Employee> getAllEmps();
+
+	@Query("from Employee where empGender=:gender")
+	public List<Employee> getEmpsWithGender(String gender);
+
+	@Query(value = "select * from employee", nativeQuery = true)
+	public List<Employee> getEmpsSQL();
+
+}
+-----------------------------------------------------------------------
+
+===========
+Assignment
+===========
+
+1) Implement insert + update + delete using Custom HQL queries.
+
+
+=================================
+Q) Which is better SQL or HQL ?
+=================================
+
+=> Performance wise SQL is better
+
+=> Flexibility wise HQL is better
+
+
+===============
+JpaRepository
+===============
+
+=> This is a predefined data jpa interface which is used to perform DB operations.
+
+=> Using Jpa repository we can perform below operations
+
+			a) Crud operations
+			b) Sorting
+			c) Pagination
+			d) Query By Example (dynamic query creation)
+
+	JpaRepository = CrudRepository + Sorting + Pagination + QBE
+
+
+----------------------------------------------------------------------------
+@Service
+public class EmployeeService {
+
+	private EmployeeRepository empRepo;
+
+	public EmployeeService(EmployeeRepository empRepo) {
+		this.empRepo = empRepo;
+	}
+
+	public void getEmps() {
+		// List<Employee> all = empRepo.findAll();
+		List<Employee> all = empRepo.findAll(Sort.by("empSalary").descending());
+		all.forEach(System.out::println);
+	}
+
+}
+------------------------------------------------------------------
+
+======================
+What is Pagination ?
+======================
+
+=> The process dividing records into multiple pages.
+
+Ex: If we have 1 lakh records in table it is not recommended to display one lakh records in single page.
+
+=> In realtime we need to implement pagination in our application.
+
+gmail ---> will display 50 records in inbox
+
+flipkart --> will display 24 records in one page 
+
+@Service
+public class EmployeeService {
+	
+	private static final int pageSize = 3;
+
+	private EmployeeRepository empRepo;
+
+	public EmployeeService(EmployeeRepository empRepo) {
+		this.empRepo = empRepo;
+	}
+
+	public void getEmps(int pageNum) {
+
+		Pageable page = PageRequest.of(pageNum-1, pageSize);
+
+		Page<Employee> emps = empRepo.findAll(page);
+
+		emps.get().forEach(System.out::println);
+	}
+
+}
+
+==================
+Query By Example 
+==================
+
+=> It is used to construct dynamic query based on filter conditions.
+
+=> Based on entity obj data query will be created.
+
+public void getEmpsWithQBE(Employee emp) {
+		
+		Example<Employee> empEx = Example.of(emp);
+		
+		List<Employee> emps = empRepo.findAll(empEx);
+		
+		emps.forEach(System.out::println);
+}
+
+============
+Assignment
+============
+
+Requirement : Develop data jpa application to retrieve employees based on below conditions 
+
+Condition : Male Employees belongs to India having salary >=5000
